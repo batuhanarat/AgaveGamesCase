@@ -4,9 +4,10 @@ public class AssetLib : MonoBehaviour, IProvidable
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject TilePrefab;
-    [SerializeField] private GameObject GreenColoredItemPrefab, BlueColoredItemPrefab, RedColoredItemPrefab, YellowColoredItemPrefab;
+    [SerializeField] private GameObject ColoredItemPrefab;
     [SerializeField] private GameObject SuccessScreenPrefab, FailScreenPrefab;
     [SerializeField] private GameObject ScorePanel, MovePanel;
+    [SerializeField] private GameObject Shadow;
 
     private Transform _gridRoot;
     private Transform _itemRoot;
@@ -48,14 +49,12 @@ public class AssetLib : MonoBehaviour, IProvidable
         return assetType switch
         {
             AssetType.Tile => Instantiate(TilePrefab, _gridRoot),
-            AssetType.GreenColoredItem => Instantiate(GreenColoredItemPrefab, _itemRoot),
-            AssetType.BlueColoredItem => Instantiate(BlueColoredItemPrefab, _itemRoot),
-            AssetType.RedColoredItem => Instantiate(RedColoredItemPrefab, _itemRoot),
-            AssetType.YellowColoredItem => Instantiate(YellowColoredItemPrefab, _itemRoot),
+            AssetType.ColoredItem => Instantiate(ColoredItemPrefab, _itemRoot),
             AssetType.FailScreen => Instantiate(FailScreenPrefab,_uiRoot),
             AssetType.SuccessScreen => Instantiate(SuccessScreenPrefab,_uiRoot),
             AssetType.MovePanel => MovePanel,
             AssetType.ScorePanel => ScorePanel,
+            AssetType.Shadow => Shadow,
             _ => null
         };
     }

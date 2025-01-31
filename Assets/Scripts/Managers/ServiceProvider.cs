@@ -39,12 +39,12 @@ public static class ServiceProvider
         _ = new LevelManager();
         _ = new MoveManager();
         _ = new ScoreManager();
+        _ = new ItemFactory();
             SceneManager.sceneLoaded += (_, _) =>
             {
                 Debug.Log("Scene Loaded");
                 ScoreManager.Reset();
                 MoveManager.Reset();
-
             };
 
     }

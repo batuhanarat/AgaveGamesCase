@@ -18,11 +18,6 @@ public class MoveManager : IProvidable
 
     public void MakeMove()
     {
-        UnityEngine.Debug.Log("CanMakeMove: " + CanMakeMove);
-        UnityEngine.Debug.Log("IsLocked: " + _locked);
-        UnityEngine.Debug.Log("MoveCount: " + MoveCount);
-
-
         if(!CanMakeMove) return;
         MoveCount--;
         _onMoveCountChanged(MoveCount);

@@ -3,12 +3,10 @@ public enum AssetType
 {
     None,
     Tile,
-    GreenColoredItem,
-    RedColoredItem,
-    YellowColoredItem,
-    BlueColoredItem,
+    ColoredItem,
     FailScreen,
     SuccessScreen,
     ScorePanel,
-    MovePanel
+    MovePanel,
+    Shadow
 }
