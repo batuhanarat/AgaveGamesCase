@@ -4,12 +4,14 @@ public class AssetLib : MonoBehaviour, IProvidable
 {
     [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject TilePrefab;
-    [SerializeField] private GameObject GreenColoredItemPrefab, BlueColoredItemPrefab, RedColoredItemPrefab,YellowColoredItemPrefab;
+    [SerializeField] private GameObject GreenColoredItemPrefab, BlueColoredItemPrefab, RedColoredItemPrefab, YellowColoredItemPrefab;
     [SerializeField] private GameObject SuccessScreenPrefab, FailScreenPrefab;
+    [SerializeField] private GameObject ScorePanel, MovePanel;
 
     private Transform _gridRoot;
     private Transform _itemRoot;
     private Transform _uiRoot;
+
 
     private void Awake()
     {
@@ -52,6 +54,8 @@ public class AssetLib : MonoBehaviour, IProvidable
             AssetType.YellowColoredItem => Instantiate(YellowColoredItemPrefab, _itemRoot),
             AssetType.FailScreen => Instantiate(FailScreenPrefab,_uiRoot),
             AssetType.SuccessScreen => Instantiate(SuccessScreenPrefab,_uiRoot),
+            AssetType.MovePanel => MovePanel,
+            AssetType.ScorePanel => ScorePanel,
             _ => null
         };
     }

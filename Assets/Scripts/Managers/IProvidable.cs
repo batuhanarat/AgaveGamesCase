@@ -1,4 +1,1 @@
-public interface IProvidable
-{
-
-}
+public interface IProvidable{}

@@ -6,21 +6,47 @@ using UnityEngine.SceneManagement;
 public static class ServiceProvider
 {
     private static readonly Dictionary<Type, IProvidable> _registerDictionary = new();
-
     public static UIManager UIManager => GetManager<UIManager>();
     public static LevelManager LevelManager => GetManager<LevelManager>();
+    public static ScoreManager ScoreManager => GetManager<ScoreManager>();
+    public static MoveManager MoveManager => GetManager<MoveManager>();
     public static AssetLib AssetLib => GetManager<AssetLib>();
+    public static GameConfig GameConfig;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     public static void InitializeServiceProvider()
     {
+        /*
         SceneManager.sceneLoaded += (_, _) =>
         {
+            if(GameConfig == null) {
+                GameConfig = Resources.Load<GameConfig>("ScriptableObjects/GameConfigSO");
+            }
             //Self registered.
             _ = new UIManager();
             _ = new LevelManager();
-
+            _ = new MoveManager();
+            _ = new ScoreManager();
         };
+        */
+
+
+        if(GameConfig == null) {
+            GameConfig = Resources.Load<GameConfig>("ScriptableObjects/GameConfigSO");
+        }
+        //Self registered.
+        _ = new UIManager();
+        _ = new LevelManager();
+        _ = new MoveManager();
+        _ = new ScoreManager();
+            SceneManager.sceneLoaded += (_, _) =>
+            {
+                Debug.Log("Scene Loaded");
+                ScoreManager.Reset();
+                MoveManager.Reset();
+
+            };
+
     }
 
     private static T GetManager<T>() where T : class, IProvidable

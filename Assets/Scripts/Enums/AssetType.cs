@@ -8,5 +8,7 @@ public enum AssetType
     YellowColoredItem,
     BlueColoredItem,
     FailScreen,
-    SuccessScreen
+    SuccessScreen,
+    ScorePanel,
+    MovePanel
 }
