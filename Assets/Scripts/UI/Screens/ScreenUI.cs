@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenChangeUI : MonoBehaviour, IUIObject
+public class ScreenUI : MonoBehaviour, IUIScreen
 {
     [SerializeField] private Button ContinueButton;
    // [SerializeField] private GameObject Shadow;

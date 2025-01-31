@@ -1,6 +1,6 @@
 using System;
 
-public interface IUIObject
+public interface IUIScreen
 {
     public event Action OnContinueClicked;
     public void Show();
