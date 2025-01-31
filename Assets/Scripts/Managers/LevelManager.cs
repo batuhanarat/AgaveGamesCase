@@ -6,6 +6,16 @@ public class LevelManager : IProvidable
     {
         ServiceProvider.Register(this);
     }
+    public void DecideLevelStatus()
+    {
+        if(ServiceProvider.ScoreManager.IsWin())
+        {
+            OnLevelSuccess();
+        } else
+        {
+            OnLevelFailed();
+        }
+    }
 
     public void TryAgain()
     {
