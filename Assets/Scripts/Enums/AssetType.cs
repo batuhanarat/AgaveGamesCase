@@ -6,5 +6,7 @@ public enum AssetType
     GreenColoredItem,
     RedColoredItem,
     YellowColoredItem,
-    BlueColoredItem
+    BlueColoredItem,
+    FailScreen,
+    SuccessScreen
 }

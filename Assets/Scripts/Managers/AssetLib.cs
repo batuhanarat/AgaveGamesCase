@@ -2,10 +2,14 @@ using UnityEngine;
 
 public class AssetLib : MonoBehaviour, IProvidable
 {
+    [SerializeField] private Canvas canvas;
     [SerializeField] private GameObject TilePrefab;
     [SerializeField] private GameObject GreenColoredItemPrefab, BlueColoredItemPrefab, RedColoredItemPrefab,YellowColoredItemPrefab;
+    [SerializeField] private GameObject SuccessScreenPrefab, FailScreenPrefab;
+
     private Transform _gridRoot;
     private Transform _itemRoot;
+    private Transform _uiRoot;
 
     private void Awake()
     {
@@ -16,6 +20,7 @@ public class AssetLib : MonoBehaviour, IProvidable
 
         _gridRoot.parent = transform;
         _itemRoot.parent = transform;
+        _uiRoot = canvas.transform;
     }
 
     public T GetAsset<T>(AssetType assetType, string objectName) where T : MonoBehaviour
@@ -45,6 +50,8 @@ public class AssetLib : MonoBehaviour, IProvidable
             AssetType.BlueColoredItem => Instantiate(BlueColoredItemPrefab, _itemRoot),
             AssetType.RedColoredItem => Instantiate(RedColoredItemPrefab, _itemRoot),
             AssetType.YellowColoredItem => Instantiate(YellowColoredItemPrefab, _itemRoot),
+            AssetType.FailScreen => Instantiate(FailScreenPrefab,_uiRoot),
+            AssetType.SuccessScreen => Instantiate(SuccessScreenPrefab,_uiRoot),
             _ => null
         };
     }
