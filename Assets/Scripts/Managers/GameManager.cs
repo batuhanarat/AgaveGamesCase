@@ -20,7 +20,28 @@ public class GameManager : MonoBehaviour
         {
             ServiceProvider.ScoreManager.IncrementScore(1);
         }
-
-
     }
+
+    public void Start()
+    {
+        StartGame();
+    }
+
+    public void StartGame()
+    {
+        // Take the grid data from game config
+        ServiceProvider.ItemFactory.InitializePool();
+
+        int rows = 8;
+        int columns = 8;
+        ServiceProvider.GameGrid.Initialize(rows,columns);
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++)
+            {
+                ColoredItem coloredItem = ServiceProvider.ItemFactory.GetRandomColoredItem();
+                ServiceProvider.GameGrid.AddToGrid(coloredItem, new Vector2Int(j,i));
+            }
+        }
+    }
+
 }

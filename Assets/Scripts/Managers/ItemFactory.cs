@@ -14,16 +14,15 @@ public class ItemFactory : IProvidable
         ServiceProvider.Register(this);
         coloredItemConfig = Resources.Load<ColoredItemConfig>("ScriptableObjects/ColoredItemConfigSO"); // move to assetlib or serviceprovider
 
-       //Maybe move to somewhere else
-        InitializePool();
-        PrePopulatePool(itemPool, defaultCapacity);
+        //Maybe move to somewhere else
+
     }
 
     //Refactor random algorithm
     public ColoredItem GetRandomColoredItem()
     {
         ItemColor[] itemColors = {ItemColor.Red, ItemColor.Green, ItemColor.Blue, ItemColor.Yellow};
-        var randomIndex = UnityEngine.Random.Range(0,3);
+        var randomIndex = UnityEngine.Random.Range(0,4);
         ItemColor randomlySelectedColor = itemColors[randomIndex];
 
         return GetItemWithColor(randomlySelectedColor);
@@ -44,13 +43,13 @@ public class ItemFactory : IProvidable
     private void PrePopulatePool(IObjectPool<ColoredItem> pool, int defaultCapacity)
     {
         for(int i = 0 ; i < defaultCapacity ; i++) {
-            var enemy = pool.Get();
-            pool.Release(enemy);
+            var item = pool.Get();
+            pool.Release(item);
         }
     }
 
     #region Pooling
-    private IObjectPool<ColoredItem> InitializePool()
+    public IObjectPool<ColoredItem> InitializePool()
     {
             itemPool = new ObjectPool<ColoredItem>(
                 CreateNewColoredItem,
@@ -60,6 +59,9 @@ public class ItemFactory : IProvidable
                 collectionCheck,
                 defaultCapacity,
                 maxPoolSize);
+
+            PrePopulatePool(itemPool, defaultCapacity);
+
             return itemPool;
     }
     private ColoredItem CreateNewColoredItem()

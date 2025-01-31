@@ -1,9 +1,9 @@
 using UnityEngine;
 
-public class Grid : MonoBehaviour
+public class Grid : MonoBehaviour, IProvidable
 {
     [SerializeField] private SpriteRenderer gridRenderer;
-    [SerializeField] public Tile[,] _tiles;
+    [SerializeField] public Tile[,] _grid;
     private Tile _currentSelectedTile;
     private int _rows;
     private int _columns;
@@ -14,10 +14,9 @@ public class Grid : MonoBehaviour
 
     public float ItemSize { get; private set; }
 
-
-    public void Start()
+    private void Awake()
     {
-        Initialize(8,8);
+        ServiceProvider.Register(this);
     }
 
     public void Initialize(int rows, int columns)
@@ -40,7 +39,7 @@ public class Grid : MonoBehaviour
         float boardHeight = cellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
 
         AdjustBoardSprite(boardWidth, boardHeight);
-        _tiles = new Tile[rows, columns];
+        _grid = new Tile[rows, columns];
 
         InitializeBoardWithCells(cellSize);
 
@@ -71,16 +70,17 @@ public class Grid : MonoBehaviour
                         tile.transform.localScale = new Vector3(scale, scale, 1);
 
                     }
+
                     cellIndex.x = j;
                     cellIndex.y = i;
-                    tile.SetIndex(cellIndex.x, cellIndex.y);
+                    tile.SetCoord(cellIndex);
 
-                    _tiles[j, i] = tile;
+                    _grid[j, i] = tile;
                 }
             }
         }
     }
-      private void AdjustBoardSprite(float boardWidth, float boardHeight)
+    private void AdjustBoardSprite(float boardWidth, float boardHeight)
     {
         if (gridRenderer != null) {
             gridRenderer.size = new Vector2(boardWidth, boardHeight);
@@ -114,7 +114,12 @@ public class Grid : MonoBehaviour
         return 1f;
     }
 
-
+    public void AddToGrid(ItemBase item, Vector2Int coord)
+    {
+        Tile tile = _grid[coord.x,coord.y];
+        tile.SetItem(item);
+        return;
+    }
 
     public void OnMouseDown()
     {
@@ -130,7 +135,4 @@ public class Grid : MonoBehaviour
     {
         Debug.Log("Input finished");
     }
-
-
-
 }

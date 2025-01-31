@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 public static class ServiceProvider
 {
     private static readonly Dictionary<Type, IProvidable> _registerDictionary = new();
+
+    public static Grid GameGrid => GetManager<Grid>();
     public static UIManager UIManager => GetManager<UIManager>();
     public static LevelManager LevelManager => GetManager<LevelManager>();
     public static ScoreManager ScoreManager => GetManager<ScoreManager>();
     public static MoveManager MoveManager => GetManager<MoveManager>();
     public static AssetLib AssetLib => GetManager<AssetLib>();
+    public static ItemFactory ItemFactory => GetManager<ItemFactory>();
     public static GameConfig GameConfig;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -42,7 +45,6 @@ public static class ServiceProvider
         _ = new ItemFactory();
             SceneManager.sceneLoaded += (_, _) =>
             {
-                Debug.Log("Scene Loaded");
                 ScoreManager.Reset();
                 MoveManager.Reset();
             };

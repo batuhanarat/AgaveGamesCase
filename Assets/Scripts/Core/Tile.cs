@@ -4,7 +4,8 @@ public class Tile : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Vector3 position;
-    private int X,Y;
+    private Vector2Int _coord;
+    private ItemBase? item;
 
     public void SetWorldPosition(Vector3 position)
     {
@@ -20,9 +21,14 @@ public class Tile : MonoBehaviour
 
         transform.localScale = new Vector3(scaleX, scaleY, 1f);
     }
-    public void SetIndex(int x, int y)
+    public void SetCoord(Vector2Int coord)
     {
-        X = x;
-        Y = y;
+        this._coord = coord;
+    }
+
+    public void SetItem(ItemBase item)
+    {
+        this.item = item;
+        item.PlaceInTile(this, _coord);
     }
 }

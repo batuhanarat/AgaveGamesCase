@@ -767,10 +767,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canvas: {fileID: 1719491826}
   TilePrefab: {fileID: 3807978577028571363, guid: 28b6388fdf9aa41b2bfc3694a8310543, type: 3}
-  GreenColoredItemPrefab: {fileID: 2124311073162938842, guid: cc530a2c520954dfb907be299a04a47b, type: 3}
-  BlueColoredItemPrefab: {fileID: 1574144860785897280, guid: 8d373592ca38c48fe8b846d9a42872d7, type: 3}
-  RedColoredItemPrefab: {fileID: 3611248391942336165, guid: 584ee770691b741cb992bbcfd6cfa53e, type: 3}
-  YellowColoredItemPrefab: {fileID: 9221668100259239203, guid: b2bd150739e1e42f289097147fd22c34, type: 3}
+  ColoredItemPrefab: {fileID: 9221668100259239203, guid: 4c47b5a4962624052977c8c706bd4013, type: 3}
   SuccessScreenPrefab: {fileID: 4687894680916444700, guid: b2033f0f70d044212aa7444dbffd2246, type: 3}
   FailScreenPrefab: {fileID: 1943309998699962237, guid: 8969f02f224b549efbf9ecf9cfde7405, type: 3}
   ScorePanel: {fileID: 15725993}
