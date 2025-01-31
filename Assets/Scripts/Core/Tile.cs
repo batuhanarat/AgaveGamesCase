@@ -6,10 +6,19 @@ public class Tile : MonoBehaviour
     private Vector3 position;
     private int X,Y;
 
-    public void SetPosition(Vector3 position)
+    public void SetWorldPosition(Vector3 position)
     {
         this.position = position;
-        transform.position = position;
+       // transform.position = position;
+    }
+    public void SetSize(float width, float height)
+    {
+        Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
+
+        float scaleX = width / spriteSize.x;
+        float scaleY = height / spriteSize.y;
+
+        transform.localScale = new Vector3(scaleX, scaleY, 1f);
     }
     public void SetIndex(int x, int y)
     {

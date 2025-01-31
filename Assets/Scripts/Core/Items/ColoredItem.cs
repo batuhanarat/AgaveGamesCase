@@ -1,10 +1,13 @@
+using UnityEngine;
+
 public class ColoredItem : ItemBase
 {
     public ItemColor Color { get; private set; }
 
-    public void SetColor(ItemColor color)
+    public void Configure(ItemColor color, Sprite sprite)
     {
         Color = color;
+        spriteRenderer.sprite = sprite;
     }
 
     public void HighlightForLink()

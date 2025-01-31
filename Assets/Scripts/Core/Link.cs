@@ -1,13 +1,11 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class Link
 {
     #region Private Fields
-    private readonly Queue<ColoredItem> linkedItems = new();
-    private bool _isInitialized;
-    private ItemColor targetColor;
-
+        private readonly Queue<ColoredItem> linkedItems = new();
+        private bool _isInitialized;
+        private ItemColor targetColor;
     # endregion
 
     public bool IsInitialized { get  => _isInitialized; }
