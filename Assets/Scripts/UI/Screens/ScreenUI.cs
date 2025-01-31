@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class ScreenUI : MonoBehaviour, IUIScreen
 {
     [SerializeField] private Button ContinueButton;
-   // [SerializeField] private GameObject Shadow;
     private void Awake()
     {
         ContinueButton.onClick.AddListener(() => { OnContinueClicked?.Invoke(); });
@@ -15,13 +14,15 @@ public class ScreenUI : MonoBehaviour, IUIScreen
 
     public void Hide()
     {
-       // Shadow.SetActive(false);
+        var shadow = ServiceProvider.AssetLib.GetAsset<RectTransform>(AssetType.Shadow);
+        shadow.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 
     public void Show()
     {
-       // Shadow.SetActive(true);
+        var shadow = ServiceProvider.AssetLib.GetAsset<RectTransform>(AssetType.Shadow);
+        shadow.gameObject.SetActive(true);
         gameObject.SetActive(true);
     }
 }
