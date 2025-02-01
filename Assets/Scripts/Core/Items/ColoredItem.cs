@@ -10,13 +10,18 @@ public class ColoredItem : ItemBase
         spriteRenderer.sprite = sprite;
     }
 
+    public void TryExplode()
+    {
+        ServiceProvider.ItemFactory.ReturnToPool(this);
+    }
+
     public void HighlightForLink()
     {
-        // Highlight the item
+        ServiceProvider.GameGrid._grid[_coord.x,_coord.y].MockHighlight();
     }
 
     public void RemoveHighlightForLink()
     {
-        // Remove highlight of the item
+        ServiceProvider.GameGrid._grid[_coord.x,_coord.y].MockUnhighlight();
     }
 }

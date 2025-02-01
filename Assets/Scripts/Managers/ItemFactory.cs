@@ -37,6 +37,8 @@ public class ItemFactory : IProvidable
 
     public void ReturnToPool(ColoredItem item)
     {
+        ServiceProvider.GameGrid._grid[item._coord.x, item._coord.y].RemoveItem();
+        item.Reset();
         itemPool.Release(item);
     }
 
