@@ -104,8 +104,7 @@ public class Grid : MonoBehaviour, IProvidable
     public void OnMouseDown()
     {
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
-        if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+        if(!TryGetTileFromPosition(clickPosition, out Tile tile) || !tile.TryGetColoredItem(out ColoredItem coloredItem) ) return;
         _currentSelectedTile = tile;
         link.Initialize(coloredItem);
     }
@@ -113,13 +112,7 @@ public class Grid : MonoBehaviour, IProvidable
     public void OnMouseDrag()
     {
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
-        if(tile == _currentSelectedTile) return;
-        if(!CheckTilesAreAdjacent(tile,_currentSelectedTile)) {
-            Debug.Log("Burdan dönmeli komşu değiller" );
-            return;
-        }
-        if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+        if(!TryGetTileFromPosition(clickPosition, out Tile tile) || tile == _currentSelectedTile || !tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
         _currentSelectedTile = tile;
         link.TryAdd(coloredItem);
     }
@@ -139,7 +132,6 @@ public class Grid : MonoBehaviour, IProvidable
         var xDiff = Mathf.Abs(tile1._coord.x - tile2._coord.x);
         var yDiff = Mathf.Abs(tile1._coord.y - tile2._coord.y);
         var manhattanDistance = xDiff + yDiff;
-        Debug.Log($"Manhattan distance between ({tile1._coord.x},{tile1._coord.y}) and ({tile2._coord.x},{tile2._coord.y}) is {manhattanDistance}");
         return manhattanDistance == 1;
     }
 

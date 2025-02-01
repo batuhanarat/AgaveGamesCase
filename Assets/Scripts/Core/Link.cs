@@ -25,7 +25,7 @@ public class Link
 
     public bool TryAdd(ColoredItem item)
     {
-        if (!_isInitialized || item.Color != _targetColor) return false;
+        if (!_isInitialized || item.Color != _targetColor || !CheckItemsAreAdjacent(item)) return false;
 
         if(_linkedSet.Contains(item))
         {
@@ -87,5 +87,12 @@ public class Link
         removedItem.RemoveHighlightForLink();
         _linkedSet.Remove(removedItem);
         _linkedItems.RemoveLast();
+    }
+    private bool CheckItemsAreAdjacent(ColoredItem item)
+    {
+        var grid = ServiceProvider.GameGrid;
+        var itemTile = grid._grid[item._coord.x, item._coord.y];
+        var itemTileInLink = grid._grid[_linkedItems.Last.Value._coord.x,_linkedItems.Last.Value._coord.y];
+        return grid.CheckTilesAreAdjacent(itemTile, itemTileInLink);
     }
 }
