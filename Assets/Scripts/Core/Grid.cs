@@ -12,13 +12,15 @@ public class Grid : MonoBehaviour, IProvidable
     private float _gridWidthOffset = 0.15f;
     public float GridSize;
 
-    public float ItemSize { get; private set; }
+    private readonly Link link = new();
+
+    public float CellSize { get; private set; }
 
     private void Awake()
     {
         ServiceProvider.Register(this);
     }
-
+    #region  Visualization of grid
     public void Initialize(int rows, int columns)
     {
         _rows = rows;
@@ -33,15 +35,15 @@ public class Grid : MonoBehaviour, IProvidable
         float availableHeight = availableScreenHeight - totalPaddingY;
 
 
-        float cellSize = Mathf.Min(availableWidth / rows, availableHeight / columns);
+        CellSize = Mathf.Min(availableWidth / rows, availableHeight / columns);
 
-        float boardWidth = cellSize * rows + totalPaddingX + 2 * _gridWidthOffset;
-        float boardHeight = cellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
+        float boardWidth = CellSize * rows + totalPaddingX + 2 * _gridWidthOffset;
+        float boardHeight = CellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
 
         AdjustBoardSprite(boardWidth, boardHeight);
         _grid = new Tile[rows, columns];
 
-        InitializeBoardWithCells(cellSize);
+        InitializeBoardWithCells(CellSize);
 
 
         void InitializeBoardWithCells(float cellSize) {
@@ -89,30 +91,8 @@ public class Grid : MonoBehaviour, IProvidable
         }
     }
 
+    # endregion
 
-    private float AdjustGridSprite(float targetSize)
-    {
-        if (gridRenderer != null)
-        {
-            Vector2 spriteSize = gridRenderer.sprite.bounds.size;
-
-            float screenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2;
-            float screenHeight = Camera.main.orthographicSize * 2;
-
-            float desiredWidth = screenWidth * 0.90f ;
-            float desiredHeight = screenHeight * 0.85f;
-
-            float scaleX = desiredWidth / spriteSize.x;
-            float scaleY = desiredHeight / spriteSize.y;
-
-            var scale =  Mathf.Min(scaleX, scaleY);
-
-
-            transform.localScale = new Vector3(scale, scale, 1);
-            return scale;
-        }
-        return 1f;
-    }
 
     public void AddToGrid(ItemBase item, Vector2Int coord)
     {
@@ -123,16 +103,47 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnMouseDown()
     {
-        Debug.Log("Input started");
+       // Debug.Log("Input started");
+
+        Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
+        if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+        _currentSelectedTile = tile;
+        link.Initialize(coloredItem);
     }
 
     public void OnMouseDrag()
     {
-        Debug.Log("Input is taken right now");
+        Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
+        if(tile == _currentSelectedTile) return;
+        if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+        _currentSelectedTile = tile;
+        link.TryAdd(coloredItem);
+       // Debug.Log("Input is taken right now");
     }
 
-    public void  OnMouseUp()
+    public void OnMouseUp()
     {
-        Debug.Log("Input finished");
+        _currentSelectedTile = null;
+        link.TryExplodeLink();
+        link.Reset();
+
+    }
+    public bool TryGetTileFromPosition(Vector3 worldPosition,out Tile tile)
+    {
+        Vector3 localPosition = worldPosition - transform.position;
+
+        int col = Mathf.FloorToInt((localPosition.x + _columns / 2.0f * CellSize) / CellSize);
+        int row = Mathf.FloorToInt((localPosition.y + _rows / 2.0f * CellSize) / CellSize);
+
+        if (col < 0 || col >= _columns || row < 0 || row >= _rows)
+        {
+            tile = default;
+            return false;
+        }
+
+        tile = _grid[col,row];
+        return true;
     }
 }

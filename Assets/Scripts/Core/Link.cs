@@ -3,18 +3,15 @@ using System.Collections.Generic;
 public class Link
 {
     #region Private Fields
-        private readonly Stack<ColoredItem> _linkedStack = new();
+        private readonly LinkedList<ColoredItem> _linkedItems = new();
         private readonly HashSet<ColoredItem> _linkedSet = new();
         private bool _isInitialized;
         private ItemColor _targetColor;
-        private ColoredItem _beforeLastPushed;
-        private ColoredItem _lastPushedItem => _linkedStack.Peek();
+        private const int VALID_LINK_COUNT = 3;
 
     # endregion
 
     public bool IsInitialized { get  => _isInitialized; }
-
-    private const int VALID_LINK_COUNT = 3;
 
     public void Initialize(ColoredItem item)
     {
@@ -31,34 +28,33 @@ public class Link
 
         if(_linkedSet.Contains(item))
         {
-            if(item != _beforeLastPushed) return false;
+            if(item != _linkedItems.Last.Previous?.Value) return false;
 
             RemoveFromLink();
+            return false;
 
         }
-        _beforeLastPushed = _linkedStack.Peek();
         AddToLink(item);
         return true;
     }
 
     public bool TryExplodeLink()
     {
-        UnityEngine.Debug.Log("Stack COUNTU: " + _linkedStack.Count);
         if (!_isInitialized ) return false;
 
-        var count = _linkedStack.Count;
+        var count = _linkedItems.Count;
         bool isValidLink = count >= VALID_LINK_COUNT;
 
-
-        while(_linkedStack.Count > 0)
+        while(_linkedItems.Count > 0)
         {
-            ColoredItem item = _linkedStack.Pop();
+            ColoredItem item = _linkedItems.First.Value;
             item.RemoveHighlightForLink();
 
             if (isValidLink)
             {
                 item.TryExplode();
             }
+            _linkedItems.RemoveFirst();
         }
 
         if (isValidLink)
@@ -72,22 +68,23 @@ public class Link
 
     public void Reset()
     {
-        _linkedStack.Clear();
+        _linkedItems.Clear();
         _linkedSet.Clear();
         _isInitialized = false;
     }
 
     private void AddToLink(ColoredItem item)
     {
-        _linkedStack.Push(item);
+        _linkedItems.AddLast(item);
         _linkedSet.Add(item);
         item.HighlightForLink();
     }
 
     private void RemoveFromLink()
     {
-        _lastPushedItem.RemoveHighlightForLink();
-        _linkedSet.Remove(_lastPushedItem);
-        _linkedStack.Pop();
+        var removedItem = _linkedItems.Last.Value;
+        removedItem.RemoveHighlightForLink();
+        _linkedSet.Remove(removedItem);
+        _linkedItems.RemoveLast();
     }
 }
