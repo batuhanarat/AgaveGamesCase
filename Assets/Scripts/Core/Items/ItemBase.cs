@@ -11,7 +11,11 @@ public abstract class ItemBase : MonoBehaviour
         transform.position = tile.transform.position;
         transform.localScale = Vector3.one;
         transform.localScale = tile.transform.localScale;
-        //SetAlphaToNormal();
+    }
+
+    public void UpdateCoordinate(Vector2Int coord)
+    {
+        _coord = coord;
     }
 
     public void Reset()

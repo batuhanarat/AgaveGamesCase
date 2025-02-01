@@ -12,6 +12,8 @@ public static class ServiceProvider
     public static LevelManager LevelManager => GetManager<LevelManager>();
     public static ScoreManager ScoreManager => GetManager<ScoreManager>();
     public static MoveManager MoveManager => GetManager<MoveManager>();
+    public static FallManager FallManager => GetManager<FallManager>();
+    public static AnimationManager AnimationManager => GetManager<AnimationManager>();
     public static AssetLib AssetLib => GetManager<AssetLib>();
     public static ItemFactory ItemFactory => GetManager<ItemFactory>();
     public static GameConfig GameConfig;
@@ -43,6 +45,7 @@ public static class ServiceProvider
         _ = new MoveManager();
         _ = new ScoreManager();
         _ = new ItemFactory();
+        _ = new FallManager();
             SceneManager.sceneLoaded += (_, _) =>
             {
                 ScoreManager.Reset();

@@ -97,14 +97,12 @@ public class Grid : MonoBehaviour, IProvidable
     public void AddToGrid(ItemBase item, Vector2Int coord)
     {
         Tile tile = _grid[coord.x,coord.y];
-        tile.SetItem(item);
+        tile.SetItem(item,true);
         return;
     }
 
     public void OnMouseDown()
     {
-       // Debug.Log("Input started");
-
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
         if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
@@ -117,19 +115,34 @@ public class Grid : MonoBehaviour, IProvidable
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(!TryGetTileFromPosition(clickPosition, out Tile tile)) return;
         if(tile == _currentSelectedTile) return;
+        if(!CheckTilesAreAdjacent(tile,_currentSelectedTile)) {
+            Debug.Log("Burdan dönmeli komşu değiller" );
+            return;
+        }
         if(!tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
         _currentSelectedTile = tile;
         link.TryAdd(coloredItem);
-       // Debug.Log("Input is taken right now");
     }
 
     public void OnMouseUp()
     {
         _currentSelectedTile = null;
-        link.TryExplodeLink();
+        bool isExploded = link.TryExplodeLink();
         link.Reset();
-
+        if(isExploded)
+        {
+            ServiceProvider.FallManager.StartFall();
+        }
     }
+    public bool CheckTilesAreAdjacent(Tile tile1, Tile tile2)
+    {
+        var xDiff = Mathf.Abs(tile1._coord.x - tile2._coord.x);
+        var yDiff = Mathf.Abs(tile1._coord.y - tile2._coord.y);
+        var manhattanDistance = xDiff + yDiff;
+        Debug.Log($"Manhattan distance between ({tile1._coord.x},{tile1._coord.y}) and ({tile2._coord.x},{tile2._coord.y}) is {manhattanDistance}");
+        return manhattanDistance == 1;
+    }
+
     public bool TryGetTileFromPosition(Vector3 worldPosition,out Tile tile)
     {
         Vector3 localPosition = worldPosition - transform.position;

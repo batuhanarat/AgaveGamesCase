@@ -37,19 +37,25 @@ public class Tile : MonoBehaviour
         this._coord = coord;
     }
 
-    public void SetItem(ItemBase item)
+    public void SetItem(ItemBase item, bool  shouldPlaceInTile )
     {
         this.Item = item;
-        item.PlaceInTile(this, _coord);
+        if(shouldPlaceInTile)
+        {
+            item.PlaceInTile(this, _coord);
+        }
     }
+
     public void RemoveItem()
     {
         Item = null;
     }
+
     public void MockHighlight()
     {
         spriteRenderer.color = Color.yellow;
     }
+
     public void MockUnhighlight()
     {
         spriteRenderer.color = _defaultColor;

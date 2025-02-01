@@ -3,13 +3,14 @@ using System.Collections.Generic;
 public class Link
 {
     #region Private Fields
+
         private readonly LinkedList<ColoredItem> _linkedItems = new();
         private readonly HashSet<ColoredItem> _linkedSet = new();
         private bool _isInitialized;
         private ItemColor _targetColor;
         private const int VALID_LINK_COUNT = 3;
 
-    # endregion
+    #endregion
 
     public bool IsInitialized { get  => _isInitialized; }
 
