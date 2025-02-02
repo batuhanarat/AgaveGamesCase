@@ -10,16 +10,47 @@ public class AnimationManager : MonoBehaviour, IProvidable
     {
         ServiceProvider.Register(this);
     }
-    public void StartFallingItemsAnimation(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToFall)
+    public void StartAnimateItems(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate)
     {
-        StartCoroutine(AnimateFallingItems(itemsToFall));
+        StartCoroutine(AnimateItems(itemsToAnimate));
     }
 
-    private IEnumerator AnimateFallingItems(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToFall)
+    public void StartShuffleItems(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate)
+    {
+        StartCoroutine(StartShuffle(itemsToAnimate));
+    }
+
+    public IEnumerator StartShuffle(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate)
+    {
+        yield return new WaitForSeconds(1f);
+        for(int i = 0 ; i< itemsToAnimate.Count ;i++ )
+        {
+            StartCoroutine(SmoothMove(itemsToAnimate[i].item, itemsToAnimate[i].startPos, itemsToAnimate[i].endPos));
+        }
+    }
+
+    private IEnumerator SmoothMove(ItemBase itemObj, Vector3 startPosition, Vector3 targetPosition)
+    {
+        float duration = 0.7f;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+
+            itemObj.transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+
+            yield return null;
+        }
+
+    }
+
+    private IEnumerator AnimateItems(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate)
     {
         List<Coroutine> itemCoroutines = new List<Coroutine>();
 
-        foreach (var (item, startPos, endPos) in itemsToFall)
+        foreach (var (item, startPos, endPos) in itemsToAnimate)
         {
             item.transform.position = startPos;
             itemCoroutines.Add(StartCoroutine(AnimateItem(item, startPos, endPos)));
@@ -29,7 +60,6 @@ public class AnimationManager : MonoBehaviour, IProvidable
         {
             yield return coroutine;
         }
-        ServiceProvider.ShuffleManager.TryShuffle();
 
     }
 

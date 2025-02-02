@@ -64,7 +64,7 @@ public class FallManager : IProvidable
             }
         }
 
-        ServiceProvider.AnimationManager.StartFallingItemsAnimation(itemsToFall);
+        ServiceProvider.AnimationManager.StartAnimateItems(itemsToFall);
 
     }
 
