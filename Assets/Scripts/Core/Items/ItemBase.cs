@@ -12,6 +12,10 @@ public abstract class ItemBase : MonoBehaviour
         transform.localScale = Vector3.one;
         transform.localScale = tile.transform.localScale;
     }
+    public virtual void TryExplode()
+    {
+        Debug.Log("Item Exploded at " + _coord);
+    }
 
     public void UpdateCoordinate(Vector2Int coord)
     {

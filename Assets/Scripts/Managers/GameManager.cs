@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
         // Take the grid data from game config
         ServiceProvider.ItemFactory.InitializePool();
 
-        int rows = 8;
-        int columns = 8;
+        int rows = 4;
+        int columns = 4;
         ServiceProvider.GameGrid.Initialize(rows,columns);
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++)
@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
                 ServiceProvider.GameGrid.AddToGrid(coloredItem, new Vector2Int(j,i));
             }
         }
+        ServiceProvider.ShuffleManager.TryShuffle();
     }
 
 }

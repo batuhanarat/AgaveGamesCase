@@ -29,6 +29,7 @@ public class AnimationManager : MonoBehaviour, IProvidable
         {
             yield return coroutine;
         }
+        ServiceProvider.ShuffleManager.TryShuffle();
 
     }
 

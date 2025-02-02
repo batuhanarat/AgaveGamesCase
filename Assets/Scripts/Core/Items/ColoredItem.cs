@@ -10,7 +10,7 @@ public class ColoredItem : ItemBase
         spriteRenderer.sprite = sprite;
     }
 
-    public void TryExplode()
+    public override void TryExplode()
     {
         ServiceProvider.ItemFactory.ReturnToPool(this);
     }

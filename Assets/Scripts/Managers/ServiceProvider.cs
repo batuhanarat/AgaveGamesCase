@@ -16,6 +16,8 @@ public static class ServiceProvider
     public static AnimationManager AnimationManager => GetManager<AnimationManager>();
     public static AssetLib AssetLib => GetManager<AssetLib>();
     public static ItemFactory ItemFactory => GetManager<ItemFactory>();
+    public static ShuffleManager ShuffleManager => GetManager<ShuffleManager>();
+    public static MatchManager MatchManager => GetManager<MatchManager>();
     public static GameConfig GameConfig;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -41,11 +43,13 @@ public static class ServiceProvider
         }
         //Self registered.
         _ = new UIManager();
+        _ = new ScoreManager();
         _ = new LevelManager();
         _ = new MoveManager();
-        _ = new ScoreManager();
         _ = new ItemFactory();
         _ = new FallManager();
+        _ = new ShuffleManager();
+        _ = new MatchManager();
             SceneManager.sceneLoaded += (_, _) =>
             {
                 ScoreManager.Reset();

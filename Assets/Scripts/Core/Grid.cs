@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Grid : MonoBehaviour, IProvidable
@@ -133,6 +134,58 @@ public class Grid : MonoBehaviour, IProvidable
         var yDiff = Mathf.Abs(tile1._coord.y - tile2._coord.y);
         var manhattanDistance = xDiff + yDiff;
         return manhattanDistance == 1;
+    }
+    public bool TryGetRightTile(int column, int row, out Tile rightTile)
+    {
+        if(column + 1 >= _columns) {
+            rightTile = default;
+            return false;
+        }
+        rightTile = _grid[column+1,row];
+
+        return rightTile.HasItem;
+    }
+    public bool TryGetLeftTile(int column, int row, out Tile leftTile)
+    {
+        if(column - 1 < 0) {
+            leftTile = default;
+            return false;
+        }
+        leftTile = _grid[column-1,row];
+
+        return leftTile.HasItem;
+    }
+    public bool TryGetUpperTile(int column, int row, out Tile upperTile)
+    {
+        if(row + 1 >= _rows) {
+            upperTile = default;
+            return false;
+        }
+        upperTile = _grid[column,row+1];
+
+        return upperTile.HasItem;
+    }
+    public bool TryGetBellowTile(int column, int row, out Tile belowTile)
+    {
+        if(row - 1 < 0) {
+            belowTile = default;
+            return false;
+        }
+        belowTile = _grid[column,row-1];
+
+        return belowTile.HasItem;
+    }
+
+    public List<Tile> GetNeighborsFromIndexesWithItem(int column, int row)
+    {
+        List<Tile> neighbors = new();
+
+        if (TryGetUpperTile(column, row, out Tile upperTile)) neighbors.Add(upperTile);
+        if (TryGetBellowTile(column, row, out Tile bellowTile)) neighbors.Add(bellowTile);
+        if (TryGetRightTile(column, row, out Tile rightTile)) neighbors.Add(rightTile);
+        if (TryGetLeftTile(column, row, out Tile leftTile)) neighbors.Add(leftTile);
+
+        return neighbors;
     }
 
     public bool TryGetTileFromPosition(Vector3 worldPosition,out Tile tile)
