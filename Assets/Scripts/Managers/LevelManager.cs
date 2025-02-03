@@ -1,6 +1,13 @@
 using UnityEngine.SceneManagement;
 
-public class LevelManager : IProvidable
+public interface ILevelManager
+{
+    void DecideLevelStatus();
+    void OnLevelFailed();
+    void OnLevelSuccess();
+}
+
+public class LevelManager : IProvidable , ILevelManager
 {
     public LevelManager()
     {
@@ -9,16 +16,17 @@ public class LevelManager : IProvidable
 
     public void DecideLevelStatus()
     {
-        if(ServiceProvider.ScoreManager.IsWin())
+        if(ServiceProvider.ScoreManager.IsScoreSufficient())
         {
             OnLevelSuccess();
-        } else
+        }
+        else
         {
             OnLevelFailed();
         }
     }
 
-    public void TryAgain()
+    private void TryAgain()
     {
         SceneManager.LoadScene(0);
     }
@@ -32,4 +40,5 @@ public class LevelManager : IProvidable
     {
         ServiceProvider.UIManager.ShowSuccessScreen(TryAgain);
     }
+
 }

@@ -7,17 +7,17 @@ public static class ServiceProvider
 {
     private static readonly Dictionary<Type, IProvidable> _registerDictionary = new();
 
-    public static Grid GameGrid => GetManager<Grid>();
-    public static UIManager UIManager => GetManager<UIManager>();
-    public static LevelManager LevelManager => GetManager<LevelManager>();
-    public static ScoreManager ScoreManager => GetManager<ScoreManager>();
-    public static MoveManager MoveManager => GetManager<MoveManager>();
-    public static FallManager FallManager => GetManager<FallManager>();
-    public static AnimationManager AnimationManager => GetManager<AnimationManager>();
     public static AssetLib AssetLib => GetManager<AssetLib>();
-    public static ItemFactory ItemFactory => GetManager<ItemFactory>();
-    public static ShuffleManager ShuffleManager => GetManager<ShuffleManager>();
-    public static MatchManager MatchManager => GetManager<MatchManager>();
+    public static Grid GameGrid => GetManager<Grid>();
+    public static AnimationManager AnimationManager => GetManager<AnimationManager>();
+    public static UIManager UIManager => GetManager<UIManager>();
+    public static ILevelManager LevelManager => GetManager<LevelManager>();
+    public static IScoreManager ScoreManager => GetManager<ScoreManager>();
+    public static IMoveManager MoveManager => GetManager<MoveManager>();
+    public static IFallManager FallManager => GetManager<FallManager>();
+    public static IItemFactory ItemFactory => GetManager<ItemFactory>();
+    public static IShuffleManager ShuffleManager => GetManager<ShuffleManager>();
+    public static IMatchManager MatchManager => GetManager<MatchManager>();
     public static GameConfig GameConfig;
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -42,6 +42,7 @@ public static class ServiceProvider
             GameConfig = Resources.Load<GameConfig>("ScriptableObjects/GameConfigSO");
         }
         //Self registered.
+        _ = new Grid();
         _ = new UIManager();
         _ = new ScoreManager();
         _ = new LevelManager();

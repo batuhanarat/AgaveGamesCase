@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bb54e9c1de8a4e26b360a7871c43b13, type: 3}
   m_Name: GameConfigSO
   m_EditorClassIdentifier: 
-  GridColumn: 4
-  GridRow: 4
+  GridColumn: 8
+  GridRow: 8
   MoveCount: 10
-  ScoreLimit: 10
+  ScoreLimit: 40

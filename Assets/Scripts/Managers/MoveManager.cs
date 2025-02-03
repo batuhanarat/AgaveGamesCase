@@ -1,9 +1,20 @@
 using System;
 
-public class MoveManager : IProvidable
+public interface IMoveManager
+{
+    int MoveCount { get; }
+    bool CanMakeMove { get; }
+    void MakeMove();
+    void LockMove();
+    void OpenMove();
+    void Reset();
+}
+
+public class MoveManager : IProvidable , IMoveManager
 {
     public int MoveCount { get; private set; }
     public bool CanMakeMove { get => !_locked && MoveCount>0 ; }
+
     private bool _locked = false;
     private Action<int> _onMoveCountChanged;
 

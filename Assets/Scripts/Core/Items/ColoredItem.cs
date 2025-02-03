@@ -14,22 +14,20 @@ public class ColoredItem : ItemBase
 
     public override void TryExplode()
     {
-        ServiceProvider.ItemFactory.ReturnToPool(this);
+        ServiceProvider.ItemFactory.RecycleItem(this);
     }
 
     public void HighlightForLink()
     {
-        ServiceProvider.GameGrid.GetTileFromIndex(Index).MockHighlight();
+        ServiceProvider.GameGrid.GetTileFromIndex(Index).Highlight();
         _scale = transform.lossyScale.x;
         transform.DOScale(_scale * 1.08f, 0.2f).SetEase(Ease.InSine);
-
     }
 
     public void RemoveHighlightForLink()
     {
-        ServiceProvider.GameGrid.GetTileFromIndex(Index).MockUnhighlight();
-
+        ServiceProvider.GameGrid.GetTileFromIndex(Index).Unhighlight();
         transform.DOScale(_scale, 0.2f).SetEase(Ease.InSine);
-
     }
+
 }

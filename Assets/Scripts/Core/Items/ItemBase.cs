@@ -4,6 +4,7 @@ public abstract class ItemBase : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
     public Vector2Int Index;
+
     public void PlaceInTile(Tile tile, Vector2Int coord)
     {
         Index = coord;
@@ -11,6 +12,7 @@ public abstract class ItemBase : MonoBehaviour
         transform.localScale = Vector3.one;
         transform.localScale = tile.transform.localScale;
     }
+
     public virtual void TryExplode()
     {
         Debug.Log("Item Exploded at " + Index);

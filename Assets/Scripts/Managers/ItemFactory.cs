@@ -1,19 +1,24 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class ItemFactory : IProvidable
+public interface IItemFactory
+{
+    void Initialize(GameConfig gameConfig);
+    ColoredItem GetRandomColoredItem();
+    ColoredItem GetItemWithColor(ItemColor itemColor);
+    void RecycleItem(ColoredItem item);
+}
+
+public class ItemFactory : IProvidable , IItemFactory
 {
     private IObjectPool<ColoredItem> itemPool;
     private ColoredItemConfig coloredItemConfig;
-    private bool _collectionCheck = true;
+
 
     public ItemFactory()
     {
         ServiceProvider.Register(this);
         coloredItemConfig = Resources.Load<ColoredItemConfig>("ScriptableObjects/ColoredItemConfigSO"); // move to assetlib or serviceprovider
-
-        //Maybe move to somewhere else
-
     }
 
     //Refactor random algorithm
@@ -33,7 +38,7 @@ public class ItemFactory : IProvidable
         return item;
     }
 
-    public void ReturnToPool(ColoredItem item)
+    public void RecycleItem(ColoredItem item)
     {
         ServiceProvider.GameGrid.Tiles[item.Index.x, item.Index.y].RemoveItem();
         item.Reset();
@@ -48,8 +53,18 @@ public class ItemFactory : IProvidable
         }
     }
 
+    public void Initialize(GameConfig gameConfig)
+    {
+        var defaultCapacity = gameConfig.GridRow * gameConfig.GridColumn;
+        var maxPoolSize = defaultCapacity * 2;
+        InitializePool(defaultCapacity, maxPoolSize);
+    }
+
     #region Pooling
-    public IObjectPool<ColoredItem> InitializePool(int defaultCapacity, int maxPoolSize)
+
+    private bool _collectionCheck = true;
+
+    private IObjectPool<ColoredItem> InitializePool(int defaultCapacity, int maxPoolSize)
     {
             itemPool = new ObjectPool<ColoredItem>(
                 CreateNewColoredItem,
@@ -64,20 +79,24 @@ public class ItemFactory : IProvidable
 
             return itemPool;
     }
+
     private ColoredItem CreateNewColoredItem()
     {
         ColoredItem item = ServiceProvider.AssetLib.GetAsset<ColoredItem>(AssetType.ColoredItem);
         item.gameObject.SetActive(false);
         return item;
     }
+
     private void OnTakeFromPool(ColoredItem item)
     {
         item.gameObject.SetActive(true);
     }
+
     private void OnReturnedToPool(ColoredItem item)
     {
         item.gameObject.SetActive(false);
     }
+
     private void OnDestroyPoolObject(ColoredItem item)
     {
         Object.Destroy(item.gameObject);

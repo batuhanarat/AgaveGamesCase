@@ -1,14 +1,19 @@
 
 using System.Collections.Generic;
 
-public class MatchManager : IProvidable
+public interface IMatchManager
+{
+    bool IsValidMatchGroupPresent();
+}
+
+public class MatchManager : IProvidable , IMatchManager
 {
     public MatchManager()
     {
         ServiceProvider.Register(this);
     }
 
-    public bool IsThereValidMatchGroupPresent()
+    public bool IsValidMatchGroupPresent()
     {
 
         int columns = ServiceProvider.GameConfig.GridColumn;
@@ -55,10 +60,10 @@ public class MatchManager : IProvidable
                 neighbor.TryGetColoredItem(out ColoredItem neighborItem);
                 var neighborcolor = neighborItem.Color;
 
-                if (!visited[neighbor._coord.x, neighbor._coord.y] &&
+                if (!visited[neighbor.Index.x, neighbor.Index.y] &&
                     neighborcolor == targetColor)
                 {
-                    toVisit.Push((neighbor._coord.x, neighbor._coord.y));
+                    toVisit.Push((neighbor.Index.x, neighbor.Index.y));
                 }
             }
         }

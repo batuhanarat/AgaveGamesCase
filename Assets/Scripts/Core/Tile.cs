@@ -3,23 +3,16 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer spriteRenderer;
-    public Vector3 position;
-    public Vector2Int _coord;
-    public ItemBase? Item { get; private set; }
+
+    public Vector2Int Index;
+    public bool HasItem { get => Item != null; }
+    public ItemBase Item { get; private set; }
 
     private Color _defaultColor;
-
-    public bool HasItem { get => Item != null; }
 
     public void Start()
     {
         _defaultColor = spriteRenderer.color;
-    }
-
-    public void SetWorldPosition(Vector3 position)
-    {
-        this.position = position;
-       // transform.position = position;
     }
 
     public void SetSize(float width, float height)
@@ -32,9 +25,9 @@ public class Tile : MonoBehaviour
         transform.localScale = new Vector3(scaleX, scaleY, 1f);
     }
 
-    public void SetCoord(Vector2Int coord)
+    public void SetCoord(Vector2Int index)
     {
-        this._coord = coord;
+        Index = index;
     }
 
     public void SetItem(ItemBase item, bool  shouldPlaceInTile )
@@ -42,7 +35,7 @@ public class Tile : MonoBehaviour
         this.Item = item;
         if(shouldPlaceInTile)
         {
-            item.PlaceInTile(this, _coord);
+            item.PlaceInTile(this, Index);
         }
     }
 
@@ -51,12 +44,12 @@ public class Tile : MonoBehaviour
         Item = null;
     }
 
-    public void MockHighlight()
+    public void Highlight()
     {
         spriteRenderer.color = Color.yellow;
     }
 
-    public void MockUnhighlight()
+    public void Unhighlight()
     {
         spriteRenderer.color = _defaultColor;
     }

@@ -46,7 +46,6 @@ public class AnimationManager : MonoBehaviour, IProvidable
 
             yield return null;
         }
-
     }
 
     private IEnumerator AnimateItems(List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate)
@@ -63,8 +62,8 @@ public class AnimationManager : MonoBehaviour, IProvidable
         {
             yield return coroutine;
         }
-            ServiceProvider.ShuffleManager.TryShuffle();
 
+        ServiceProvider.ShuffleManager.TryShuffle();
     }
 
     private IEnumerator AnimateItem(ItemBase item, Vector3 startPos, Vector3 endPos)
@@ -76,9 +75,7 @@ public class AnimationManager : MonoBehaviour, IProvidable
             elapsedTime += Time.deltaTime;
             float t = Mathf.Clamp01(elapsedTime / FallDuration);
 
-            // Ease.InOutQuad
             t = t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
-           // t *= t;
 
             item.transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;

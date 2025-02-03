@@ -10,7 +10,13 @@ public struct MovableItems
     public Tile OriginalTile;
 }
 
-public class ShuffleManager : IProvidable
+public interface IShuffleManager
+{
+    bool TryShuffle();
+    void Reset();
+}
+
+public class ShuffleManager : IProvidable, IShuffleManager
 {
     public ShuffleManager()
     {
@@ -19,17 +25,18 @@ public class ShuffleManager : IProvidable
 
     private List<(ItemBase item, Vector3 startPos, Vector3 endPos)> itemsToAnimate = new();
 
-    public void TryShuffle()
+    public bool TryShuffle()
     {
-        if(ServiceProvider.MatchManager.IsThereValidMatchGroupPresent()) return;
+        if(ServiceProvider.MatchManager.IsValidMatchGroupPresent()) return false;
         ServiceProvider.MoveManager.LockMove();
         Shuffle();
+        return true;
     }
     public void Reset()
     {
         itemsToAnimate.Clear();
     }
-    private void Shuffle()
+    public void Shuffle()
     {
         UnityEngine.Debug.Log("Deadlock detected");
         Dictionary<ItemColor,int> colorCounts = new();
@@ -84,9 +91,9 @@ public class ShuffleManager : IProvidable
             matchTiles.Add(currentTile);
 
             bool foundHorizontal = false;
-            if(GameGrid.TryGetRightTile(currentTile._coord.x, currentTile._coord.y, out Tile rightTile))
+            if(GameGrid.TryGetRightTile(currentTile.Index.x, currentTile.Index.y, out Tile rightTile))
             {
-                if(GameGrid.TryGetRightTile(currentTile._coord.x + 1, currentTile._coord.y, out Tile rightRightTile))
+                if(GameGrid.TryGetRightTile(currentTile.Index.x + 1, currentTile.Index.y, out Tile rightRightTile))
                 {
                     matchTiles.Add(rightTile);
                     matchTiles.Add(rightRightTile);
@@ -99,9 +106,9 @@ public class ShuffleManager : IProvidable
                 matchTiles.Clear();
                 matchTiles.Add(currentTile);
 
-                if(GameGrid.TryGetUpperTile(currentTile._coord.x, currentTile._coord.y, out Tile upperTile))
+                if(GameGrid.TryGetUpperTile(currentTile.Index.x, currentTile.Index.y, out Tile upperTile))
                 {
-                    if(GameGrid.TryGetUpperTile(currentTile._coord.x, currentTile._coord.y + 1, out Tile upperUpperTile))
+                    if(GameGrid.TryGetUpperTile(currentTile.Index.x, currentTile.Index.y + 1, out Tile upperUpperTile))
                     {
                         matchTiles.Add(upperTile);
                         matchTiles.Add(upperUpperTile);
@@ -147,7 +154,7 @@ public class ShuffleManager : IProvidable
 
                 TargetTile.RemoveItem();
                 TargetTile.SetItem(currentItem,false);
-                currentItem.UpdateIndexes(TargetTile._coord);
+                currentItem.UpdateIndexes(TargetTile.Index);
             }
 
             itemsToShuffle = itemsToShuffle.OrderBy(x => Random.value).ToList();
@@ -179,7 +186,7 @@ public class ShuffleManager : IProvidable
 
                 targetTile.RemoveItem();
                 targetTile.SetItem(currentItem,false);
-                currentItem.UpdateIndexes(targetTile._coord);
+                currentItem.UpdateIndexes(targetTile.Index);
 
 
             }

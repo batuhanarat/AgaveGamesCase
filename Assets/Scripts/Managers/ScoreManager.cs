@@ -1,6 +1,14 @@
 using System;
 
-public class ScoreManager : IProvidable
+public interface IScoreManager
+{
+    int Score { get; }
+    void IncrementScore(int value);
+    bool IsScoreSufficient();
+    void Reset();
+}
+
+public class ScoreManager : IProvidable, IScoreManager
 {
     public int Score { get; private set; }
     private int _scoreLimit;
@@ -19,7 +27,7 @@ public class ScoreManager : IProvidable
         _onScoreChanged(Score);
     }
 
-    public bool IsWin()
+    public bool IsScoreSufficient()
     {
         return Score >= _scoreLimit;
     }

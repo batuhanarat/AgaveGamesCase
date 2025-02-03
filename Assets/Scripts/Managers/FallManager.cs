@@ -1,12 +1,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallManager : IProvidable
+public interface IFallManager
+{
+    void StartFall();
+}
+
+public class FallManager : IProvidable , IFallManager
 {
 
     private int _rows;
     private int _columns;
-    private ItemFactory _itemFactory;
+    private IItemFactory _itemFactory;
     private const float NewItemStartHeight = 1.5f;
 
 
@@ -55,9 +60,10 @@ public class FallManager : IProvidable
 
                     int heightMultiplier = 1/_rows - y;
 
-                    Vector3 startPos = ServiceProvider.GameGrid.Tiles[x, _rows - 1].transform.position + (Vector3.down * ServiceProvider.GameGrid.CellSize*NewItemStartHeight*heightMultiplier);
-                    Vector3 endPos = ServiceProvider.GameGrid.Tiles[x, y].transform.position;
+                    Vector3 startPos = ServiceProvider.GameGrid.Tiles[x, _rows - 1].transform.position +
+                    ( Vector3.down * GridRenderer.Instance.CellSize * NewItemStartHeight * heightMultiplier);
 
+                    Vector3 endPos = ServiceProvider.GameGrid.Tiles[x, y].transform.position;
 
                     itemsToFall.Add((newItem, startPos, endPos));
 

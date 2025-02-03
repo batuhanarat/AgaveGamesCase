@@ -96,4 +96,5 @@ public class Link
         var itemTileInLink = grid.Tiles[_linkedItems.Last.Value.Index.x,_linkedItems.Last.Value.Index.y];
         return grid.CheckTilesAreAdjacent(itemTile, itemTileInLink);
     }
+
 }
