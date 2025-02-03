@@ -5,15 +5,13 @@ public class Grid : MonoBehaviour, IProvidable
 {
     [SerializeField] private SpriteRenderer gridRenderer;
     [SerializeField] private BoxCollider2D  gridCollider;
-    [SerializeField] public Tile[,] _grid;
+    public Tile[,] Tiles;
     private Tile _currentSelectedTile;
     private int _rows;
     private int _columns;
     private float padding  = 0.01f;
     private float _gridHeightOffset = 0.15f;
     private float _gridWidthOffset = 0.15f;
-    private const int GRID_ROW_OFFSET = 2;
-    private const int GRID_COLUMN_OFFSET = 2;
 
     public float GridSize;
 
@@ -49,7 +47,7 @@ public class Grid : MonoBehaviour, IProvidable
         float gridWidth = CellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
 
         AdjustBoardSprite(gridWidth, gridHeight);
-        _grid = new Tile[columns, rows];
+        Tiles = new Tile[columns, rows];
 
         InitializeBoardWithCells(CellSize);
 
@@ -85,7 +83,7 @@ public class Grid : MonoBehaviour, IProvidable
                     cellIndex.y = i;
                     tile.SetCoord(cellIndex);
 
-                    _grid[j, i] = tile;
+                    Tiles[j, i] = tile;
                 }
             }
         }
@@ -105,7 +103,7 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void AddToGrid(ItemBase item, Vector2Int coord)
     {
-        Tile tile = _grid[coord.x,coord.y];
+        Tile tile = Tiles[coord.x,coord.y];
         tile.SetItem(item,true);
         return;
     }
@@ -153,7 +151,7 @@ public class Grid : MonoBehaviour, IProvidable
             rightTile = default;
             return false;
         }
-        rightTile = _grid[column+1,row];
+        rightTile = Tiles[column+1,row];
 
         return rightTile.HasItem;
     }
@@ -163,7 +161,7 @@ public class Grid : MonoBehaviour, IProvidable
             leftTile = default;
             return false;
         }
-        leftTile = _grid[column-1,row];
+        leftTile = Tiles[column-1,row];
 
         return leftTile.HasItem;
     }
@@ -173,7 +171,7 @@ public class Grid : MonoBehaviour, IProvidable
             upperTile = default;
             return false;
         }
-        upperTile = _grid[column,row+1];
+        upperTile = Tiles[column,row+1];
 
         return upperTile.HasItem;
     }
@@ -183,9 +181,17 @@ public class Grid : MonoBehaviour, IProvidable
             belowTile = default;
             return false;
         }
-        belowTile = _grid[column,row-1];
+        belowTile = Tiles[column,row-1];
 
         return belowTile.HasItem;
+    }
+    public Tile GetTileFromIndex(int column, int row)
+    {
+        return Tiles[column,row];
+    }
+    public Tile GetTileFromIndex(Vector2Int index)
+    {
+        return Tiles[index.x,index.y];
     }
 
     public List<Tile> GetNeighborsFromIndexesWithItem(int column, int row)
@@ -213,7 +219,7 @@ public class Grid : MonoBehaviour, IProvidable
             return false;
         }
 
-        tile = _grid[col,row];
+        tile = Tiles[col,row];
         return true;
     }
 }

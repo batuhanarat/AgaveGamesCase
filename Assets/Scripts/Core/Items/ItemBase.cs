@@ -3,28 +3,27 @@ using UnityEngine;
 public abstract class ItemBase : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
-    public Vector2Int _coord;
-
+    public Vector2Int Index;
     public void PlaceInTile(Tile tile, Vector2Int coord)
     {
-        _coord = coord;
+        Index = coord;
         transform.position = tile.transform.position;
         transform.localScale = Vector3.one;
         transform.localScale = tile.transform.localScale;
     }
     public virtual void TryExplode()
     {
-        Debug.Log("Item Exploded at " + _coord);
+        Debug.Log("Item Exploded at " + Index);
     }
 
-    public void UpdateCoordinate(Vector2Int coord)
+    public void UpdateIndexes(Vector2Int index)
     {
-        _coord = coord;
+        Index = index;
     }
 
     public void Reset()
     {
-        _coord = Vector2Int.zero;
+        Index = Vector2Int.zero;
         transform.position = Vector3.zero;
     }
 

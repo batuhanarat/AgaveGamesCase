@@ -38,7 +38,7 @@ public class ShuffleManager : IProvidable
         var tilesToShuffle = new List<Tile>();
         var itemsToShuffle = new List<MovableItems>();
 
-        foreach(var tile in GameGrid._grid)
+        foreach(var tile in GameGrid.Tiles)
         {
             if (!tile.TryGetColoredItem(out ColoredItem coloredItem)) continue;
 
@@ -147,7 +147,7 @@ public class ShuffleManager : IProvidable
 
                 TargetTile.RemoveItem();
                 TargetTile.SetItem(currentItem,false);
-                currentItem.UpdateCoordinate(TargetTile._coord);
+                currentItem.UpdateIndexes(TargetTile._coord);
             }
 
             itemsToShuffle = itemsToShuffle.OrderBy(x => Random.value).ToList();
@@ -179,7 +179,7 @@ public class ShuffleManager : IProvidable
 
                 targetTile.RemoveItem();
                 targetTile.SetItem(currentItem,false);
-                currentItem.UpdateCoordinate(targetTile._coord);
+                currentItem.UpdateIndexes(targetTile._coord);
 
 
             }

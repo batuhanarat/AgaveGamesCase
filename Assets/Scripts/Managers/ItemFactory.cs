@@ -5,9 +5,7 @@ public class ItemFactory : IProvidable
 {
     private IObjectPool<ColoredItem> itemPool;
     private ColoredItemConfig coloredItemConfig;
-    private int defaultCapacity = 64; // get from gameconfig
-    private int maxPoolSize = 128; // get from gameconfig
-    private bool collectionCheck = true;
+    private bool _collectionCheck = true;
 
     public ItemFactory()
     {
@@ -37,7 +35,7 @@ public class ItemFactory : IProvidable
 
     public void ReturnToPool(ColoredItem item)
     {
-        ServiceProvider.GameGrid._grid[item._coord.x, item._coord.y].RemoveItem();
+        ServiceProvider.GameGrid.Tiles[item.Index.x, item.Index.y].RemoveItem();
         item.Reset();
         itemPool.Release(item);
     }
@@ -51,14 +49,14 @@ public class ItemFactory : IProvidable
     }
 
     #region Pooling
-    public IObjectPool<ColoredItem> InitializePool()
+    public IObjectPool<ColoredItem> InitializePool(int defaultCapacity, int maxPoolSize)
     {
             itemPool = new ObjectPool<ColoredItem>(
                 CreateNewColoredItem,
                 OnTakeFromPool,
                 OnReturnedToPool,
                 OnDestroyPoolObject,
-                collectionCheck,
+                _collectionCheck,
                 defaultCapacity,
                 maxPoolSize);
 
@@ -72,7 +70,6 @@ public class ItemFactory : IProvidable
         item.gameObject.SetActive(false);
         return item;
     }
-
     private void OnTakeFromPool(ColoredItem item)
     {
         item.gameObject.SetActive(true);

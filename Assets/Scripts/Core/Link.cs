@@ -92,8 +92,8 @@ public class Link
     private bool CheckItemsAreAdjacent(ColoredItem item)
     {
         var grid = ServiceProvider.GameGrid;
-        var itemTile = grid._grid[item._coord.x, item._coord.y];
-        var itemTileInLink = grid._grid[_linkedItems.Last.Value._coord.x,_linkedItems.Last.Value._coord.y];
+        var itemTile = grid.Tiles[item.Index.x, item.Index.y];
+        var itemTileInLink = grid.Tiles[_linkedItems.Last.Value.Index.x,_linkedItems.Last.Value.Index.y];
         return grid.CheckTilesAreAdjacent(itemTile, itemTileInLink);
     }
 }

@@ -18,7 +18,7 @@ public class MatchManager : IProvidable
         {
             for (int col = 0; col < columns; col++)
             {
-                if (!visited[col, row] && ServiceProvider.GameGrid._grid[col,row].HasItem)
+                if (!visited[col, row] && ServiceProvider.GameGrid.Tiles[col,row].HasItem)
                 {
                     if(FindMatchGroup(col, row, visited))
                     {
@@ -32,7 +32,7 @@ public class MatchManager : IProvidable
 
     private bool FindMatchGroup(int startCol, int startRow, bool[,] visited)
     {
-        Tile startTile =  ServiceProvider.GameGrid._grid[startCol, startRow];
+        Tile startTile =  ServiceProvider.GameGrid.Tiles[startCol, startRow];
         startTile.TryGetColoredItem(out ColoredItem item);
         ItemColor targetColor  = item.Color;
 
