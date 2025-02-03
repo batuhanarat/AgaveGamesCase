@@ -27,11 +27,14 @@ public class AnimationManager : MonoBehaviour, IProvidable
         {
             StartCoroutine(SmoothMove(itemsToAnimate[i].item, itemsToAnimate[i].startPos, itemsToAnimate[i].endPos));
         }
+        yield return null;
+        ServiceProvider.MoveManager.OpenMove();
+        ServiceProvider.ShuffleManager.Reset();
     }
 
     private IEnumerator SmoothMove(ItemBase itemObj, Vector3 startPosition, Vector3 targetPosition)
     {
-        float duration = 0.7f;
+        float duration = 0.8f;
         float elapsedTime = 0f;
 
         while (elapsedTime < duration)
@@ -60,6 +63,7 @@ public class AnimationManager : MonoBehaviour, IProvidable
         {
             yield return coroutine;
         }
+            ServiceProvider.ShuffleManager.TryShuffle();
 
     }
 

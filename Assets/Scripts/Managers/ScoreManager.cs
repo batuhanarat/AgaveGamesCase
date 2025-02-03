@@ -21,7 +21,7 @@ public class ScoreManager : IProvidable
 
     public bool IsWin()
     {
-        return (Score >= _scoreLimit);
+        return Score >= _scoreLimit;
     }
 
     public void Reset()

@@ -22,9 +22,13 @@ public class ShuffleManager : IProvidable
     public void TryShuffle()
     {
         if(ServiceProvider.MatchManager.IsThereValidMatchGroupPresent()) return;
+        ServiceProvider.MoveManager.LockMove();
         Shuffle();
     }
-
+    public void Reset()
+    {
+        itemsToAnimate.Clear();
+    }
     private void Shuffle()
     {
         UnityEngine.Debug.Log("Deadlock detected");
@@ -129,8 +133,11 @@ public class ShuffleManager : IProvidable
 
             for(int i = 0; i < 3; i++)
             {
-
-                /*
+                itemsToAnimate.Add((
+                    itemsOfSelectedColor[i].CurrentItem,
+                    itemsOfSelectedColor[i].OriginalTile.transform.position,
+                    matchTiles[i].transform.position
+                ));
 
                 var currentItem = itemsOfSelectedColor[i].CurrentItem;
                 var tileOfCurrentItem =  itemsOfSelectedColor[i].OriginalTile;
@@ -138,22 +145,9 @@ public class ShuffleManager : IProvidable
                 var targetItem = matchTiles[i].Item;
                 var TargetTile = matchTiles[i];
 
-                tileOfCurrentItem.RemoveItem();
-                tileOfCurrentItem.SetItem(targetItem,false);
-                targetItem.UpdateCoordinate(tileOfCurrentItem._coord);
-
                 TargetTile.RemoveItem();
                 TargetTile.SetItem(currentItem,false);
                 currentItem.UpdateCoordinate(TargetTile._coord);
-                */
-                itemsToAnimate.Add((
-                    itemsOfSelectedColor[i].CurrentItem,
-                    itemsOfSelectedColor[i].OriginalTile.transform.position,
-                    matchTiles[i].transform.position
-                ));
-
-
-
             }
 
             itemsToShuffle = itemsToShuffle.OrderBy(x => Random.value).ToList();
@@ -172,29 +166,20 @@ public class ShuffleManager : IProvidable
             for(int i = 0; i < itemsToShuffle.Count; i++)
             {
 
-
-                /*
-
-                var currentItem =   itemsToShuffle[i].CurrentItem;
-                var tileOfCurrentItem =  itemsToShuffle[i].OriginalTile;
-
-                var targetItem = tilesToShuffle[i].Item;
-                var TargetTile = tilesToShuffle[i];
-
-                tileOfCurrentItem.RemoveItem();
-                tileOfCurrentItem.SetItem(targetItem,false);
-                targetItem.UpdateCoordinate(tileOfCurrentItem._coord);
-
-                TargetTile.RemoveItem();
-                TargetTile.SetItem(currentItem,false);
-                currentItem.UpdateCoordinate(TargetTile._coord);
-                */
-
                 itemsToAnimate.Add((
                     itemsToShuffle[i].CurrentItem,
                     itemsToShuffle[i].OriginalTile.transform.position,
                     tilesToShuffle[i].transform.position
                 ));
+
+                var currentItem =   itemsToShuffle[i].CurrentItem;
+                var tileOfCurrentItem =  itemsToShuffle[i].OriginalTile;
+                var targetItem = tilesToShuffle[i].Item;
+                var targetTile = tilesToShuffle[i];
+
+                targetTile.RemoveItem();
+                targetTile.SetItem(currentItem,false);
+                currentItem.UpdateCoordinate(targetTile._coord);
 
 
             }

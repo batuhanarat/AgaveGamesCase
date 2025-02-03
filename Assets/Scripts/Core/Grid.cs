@@ -104,6 +104,7 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnMouseDown()
     {
+        if(!ServiceProvider.MoveManager.CanMakeMove) return;
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(!TryGetTileFromPosition(clickPosition, out Tile tile) || !tile.TryGetColoredItem(out ColoredItem coloredItem) ) return;
         _currentSelectedTile = tile;
@@ -112,6 +113,8 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnMouseDrag()
     {
+        if(!ServiceProvider.MoveManager.CanMakeMove) return;
+
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if(!TryGetTileFromPosition(clickPosition, out Tile tile) || tile == _currentSelectedTile || !tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
         _currentSelectedTile = tile;
@@ -120,6 +123,7 @@ public class Grid : MonoBehaviour, IProvidable
 
     public void OnMouseUp()
     {
+        if(!ServiceProvider.MoveManager.CanMakeMove) return;
         _currentSelectedTile = null;
         bool isExploded = link.TryExplodeLink();
         link.Reset();

@@ -25,10 +25,12 @@ public class MoveManager : IProvidable
             ServiceProvider.LevelManager.DecideLevelStatus();
         }
     }
+
     public void LockMove()
     {
         _locked = true;
     }
+
     public void OpenMove()
     {
         _locked = false;

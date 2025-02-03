@@ -33,8 +33,8 @@ public class Link
 
             RemoveFromLink();
             return false;
-
         }
+
         AddToLink(item);
         return true;
     }
@@ -88,6 +88,7 @@ public class Link
         _linkedSet.Remove(removedItem);
         _linkedItems.RemoveLast();
     }
+
     private bool CheckItemsAreAdjacent(ColoredItem item)
     {
         var grid = ServiceProvider.GameGrid;
