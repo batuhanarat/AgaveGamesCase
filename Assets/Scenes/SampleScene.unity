@@ -738,6 +738,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridRenderer: {fileID: 1845334627}
+  gridCollider: {fileID: 1845334629}
   GridSize: 0
 --- !u!61 &1845334629
 BoxCollider2D:
@@ -921,6 +922,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 224135424}
     m_Modifications:
+    - target: {fileID: 7817655561807505458, guid: 91f1e183aae064ad5ba381449eeda426, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 7817655561807505458, guid: 91f1e183aae064ad5ba381449eeda426, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0

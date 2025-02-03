@@ -4,6 +4,7 @@ using UnityEngine;
 public class Grid : MonoBehaviour, IProvidable
 {
     [SerializeField] private SpriteRenderer gridRenderer;
+    [SerializeField] private BoxCollider2D  gridCollider;
     [SerializeField] public Tile[,] _grid;
     private Tile _currentSelectedTile;
     private int _rows;
@@ -11,6 +12,9 @@ public class Grid : MonoBehaviour, IProvidable
     private float padding  = 0.01f;
     private float _gridHeightOffset = 0.15f;
     private float _gridWidthOffset = 0.15f;
+    private const int GRID_ROW_OFFSET = 2;
+    private const int GRID_COLUMN_OFFSET = 2;
+
     public float GridSize;
 
     private readonly Link link = new();
@@ -24,13 +28,16 @@ public class Grid : MonoBehaviour, IProvidable
     #region  Visualization of grid
     public void Initialize(int rows, int columns)
     {
+
+        //columns  -> width
+        //rows -> height
         _rows = rows;
         _columns = columns;
 
         float availableScreenWidth = Camera.main.orthographicSize * Camera.main.aspect * 2 * 0.9f;
         float availableScreenHeight = Camera.main.orthographicSize * 2 * 0.65f;
-        float totalPaddingX = padding * (_rows - 1);
-        float totalPaddingY = padding * (_columns - 1);
+        float totalPaddingX = padding * (_columns - 1);
+        float totalPaddingY = padding * (_rows - 1);
 
         float availableWidth = availableScreenWidth - totalPaddingX;
         float availableHeight = availableScreenHeight - totalPaddingY;
@@ -38,11 +45,11 @@ public class Grid : MonoBehaviour, IProvidable
 
         CellSize = Mathf.Min(availableWidth / rows, availableHeight / columns);
 
-        float boardWidth = CellSize * rows + totalPaddingX + 2 * _gridWidthOffset;
-        float boardHeight = CellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
+        float gridHeight = CellSize * rows + totalPaddingX + 2 * _gridWidthOffset;
+        float gridWidth = CellSize * columns + totalPaddingY + 2 * _gridHeightOffset;
 
-        AdjustBoardSprite(boardWidth, boardHeight);
-        _grid = new Tile[rows, columns];
+        AdjustBoardSprite(gridWidth, gridHeight);
+        _grid = new Tile[columns, rows];
 
         InitializeBoardWithCells(CellSize);
 
@@ -53,8 +60,8 @@ public class Grid : MonoBehaviour, IProvidable
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
 
-                    float localXPosition = (-boardWidth / 2) + _gridWidthOffset + (j * (cellSize + padding)) + (cellSize / 2);
-                    float localYPosition = (-boardHeight / 2) + _gridHeightOffset + (i * (cellSize + padding)) + (cellSize / 2);
+                    float localXPosition = (-gridWidth / 2) + _gridWidthOffset + (j * (cellSize + padding)) + (cellSize / 2);
+                    float localYPosition = (-gridHeight / 2) + _gridHeightOffset + (i * (cellSize + padding)) + (cellSize / 2);
 
                     Vector3 worldPosition = transform.TransformPoint(new Vector3(localXPosition, localYPosition, 0));
                     Tile tile = ServiceProvider.AssetLib.GetAsset<Tile>(AssetType.Tile);
@@ -87,6 +94,7 @@ public class Grid : MonoBehaviour, IProvidable
     {
         if (gridRenderer != null) {
             gridRenderer.size = new Vector2(boardWidth, boardHeight);
+            gridCollider.size = new Vector2(boardWidth, boardHeight);
         } else {
             Debug.LogWarning("Board sprite renderer is missing!");
         }
