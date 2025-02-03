@@ -7,7 +7,7 @@ public class FallManager : IProvidable
     private int _rows;
     private int _columns;
     private ItemFactory _itemFactory;
-    private const float NewItemStartHeight = 2f;
+    private const float NewItemStartHeight = 1.5f;
 
 
     public FallManager()
@@ -54,8 +54,13 @@ public class FallManager : IProvidable
                 for (int y = emptyY; y < _rows; y++)
                 {
                     ItemBase newItem = _itemFactory.GetRandomColoredItem();
-                    Vector3 startPos = ServiceProvider.GameGrid._grid[x, _rows - 1].transform.position + Vector3.up * NewItemStartHeight;
+
+                    int heightMultiplier = (1/_rows - y);
+
+                    Vector3 startPos = ServiceProvider.GameGrid._grid[x, _rows - 1].transform.position + (Vector3.down * ServiceProvider.GameGrid.CellSize*NewItemStartHeight*heightMultiplier);
                     Vector3 endPos = ServiceProvider.GameGrid._grid[x, y].transform.position;
+
+
                     itemsToFall.Add((newItem, startPos, endPos));
 
                     ServiceProvider.GameGrid._grid[x, y].SetItem(newItem,true);

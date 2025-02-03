@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour, IProvidable
 {
-    private const float FallDuration = 0.3f;
+    private const float FallDuration = 0.5f;
 
     private void Awake()
     {
@@ -77,8 +77,8 @@ public class AnimationManager : MonoBehaviour, IProvidable
             float t = Mathf.Clamp01(elapsedTime / FallDuration);
 
             // Ease.InOutQuad
-           // t = t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
-            t *= t;
+            t = t < 0.5f ? 2f * t * t : -1f + (4f - 2f * t) * t;
+           // t *= t;
 
             item.transform.position = Vector3.Lerp(startPos, endPos, t);
             yield return null;
