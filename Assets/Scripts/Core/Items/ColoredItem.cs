@@ -14,6 +14,8 @@ public class ColoredItem : ItemBase
 
     public override void TryExplode()
     {
+        var tile = ServiceProvider.GameGrid.GetTileFromIndex(Index);
+        tile.PlayParticleEffect(spriteRenderer.sprite);
         ServiceProvider.ItemFactory.RecycleItem(this);
     }
 

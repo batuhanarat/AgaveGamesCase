@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GridInteractionController : MonoBehaviour
@@ -37,19 +38,15 @@ public class GridInteractionController : MonoBehaviour
         link.TryAdd(coloredItem);
     }
 
-    public void OnMouseUp()
+    public IEnumerator OnMouseUp()
     {
-        if(!ServiceProvider.MoveManager.CanMakeMove) return;
-
+        if(!ServiceProvider.MoveManager.CanMakeMove) yield break;
+        ServiceProvider.MoveManager.LockMove();
         _currentSelectedTile = null;
-        bool isExploded = link.TryExplodeLink();
+        yield return StartCoroutine(link.TryExplodeLinkCoroutine());
+        ServiceProvider.FallManager.StartFall();
         link.Reset();
-
-        if(isExploded)
-        {
-            ServiceProvider.FallManager.StartFall();
-        }
+        ServiceProvider.MoveManager.OpenMove();
     }
-
 
 }

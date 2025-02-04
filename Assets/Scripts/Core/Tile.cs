@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
+    [SerializeField] private ParticleSystem ParticleSystem;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     public Vector2Int Index;
@@ -13,6 +14,17 @@ public class Tile : MonoBehaviour
     public void Start()
     {
         _defaultColor = spriteRenderer.color;
+    }
+
+    public void PlayParticleEffect(Sprite itemSprite)
+    {
+        ParticleSystem.TextureSheetAnimationModule tsam = ParticleSystem.textureSheetAnimation;
+                tsam.mode = ParticleSystemAnimationMode.Sprites;
+        for (int i = tsam.spriteCount - 1; i >= 0; i--) {
+                    tsam.RemoveSprite(i);
+                }
+        tsam.AddSprite(itemSprite);
+        ParticleSystem.Play();
     }
 
     public void SetSize(float width, float height)

@@ -1,4 +1,6 @@
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Link
 {
@@ -9,6 +11,7 @@ public class Link
         private bool _isInitialized;
         private ItemColor _targetColor;
         private const int VALID_LINK_COUNT = 3;
+        private float delayBetweenExplosions = 0.1f;
 
     #endregion
 
@@ -39,32 +42,38 @@ public class Link
         return true;
     }
 
-    public bool TryExplodeLink()
+    public IEnumerator TryExplodeLinkCoroutine()
     {
-        if (!_isInitialized ) return false;
+        if (!_isInitialized ) yield break;
 
         var count = _linkedItems.Count;
         bool isValidLink = count >= VALID_LINK_COUNT;
 
-        while(_linkedItems.Count > 0)
+        if(isValidLink)
         {
-            ColoredItem item = _linkedItems.First.Value;
-            item.RemoveHighlightForLink();
-
-            if (isValidLink)
+            while(_linkedItems.Count > 0)
             {
+                ColoredItem item = _linkedItems.First.Value;
+                item.RemoveHighlightForLink();
                 item.TryExplode();
+                _linkedItems.RemoveFirst();
+                yield return new WaitForSeconds(delayBetweenExplosions);
             }
-            _linkedItems.RemoveFirst();
-        }
 
-        if (isValidLink)
-        {
             ServiceProvider.ScoreManager.IncrementScore(count);
             ServiceProvider.MoveManager.MakeMove();
-            return true;
+
         }
-        return false;
+        else
+        {
+            while (_linkedItems.Count > 0)
+            {
+                ColoredItem item = _linkedItems.First.Value;
+                item.RemoveHighlightForLink();
+                _linkedItems.RemoveFirst();
+            }
+        }
+
     }
 
     public void Reset()
