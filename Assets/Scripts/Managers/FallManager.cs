@@ -61,7 +61,7 @@ public class FallManager : IProvidable , IFallManager
                     int heightMultiplier = 1/_rows - y;
 
                     Vector3 startPos = ServiceProvider.GameGrid.Tiles[x, _rows - 1].transform.position +
-                    ( Vector3.down * GridRenderer.Instance.CellSize * NewItemStartHeight * heightMultiplier);
+                    ( Vector3.down * GridRenderer.Instance.TileSize * NewItemStartHeight * heightMultiplier);
 
                     Vector3 endPos = ServiceProvider.GameGrid.Tiles[x, y].transform.position;
 

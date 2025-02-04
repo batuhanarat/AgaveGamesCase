@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour, IGameManager
         int columns = gameConfig.GridColumn;
 
         ServiceProvider.ItemFactory.Initialize(gameConfig);
-        ServiceProvider.GameGrid.BuildBoard(rows,columns);
+        ServiceProvider.GameGrid.BuildGrid(rows,columns);
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++)

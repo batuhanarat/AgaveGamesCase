@@ -12,7 +12,7 @@ public class Grid : IProvidable
         ServiceProvider.Register(this);
     }
 
-    public void BuildBoard(int rows, int columns)
+    public void BuildGrid(int rows, int columns)
     {
         _rows = rows;
         _columns = columns;
@@ -65,6 +65,7 @@ public class Grid : IProvidable
 
         return leftTile.HasItem;
     }
+
     public bool TryGetUpperTile(int column, int row, out Tile upperTile)
     {
         if(row + 1 >= _rows) {

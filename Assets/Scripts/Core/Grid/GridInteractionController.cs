@@ -16,7 +16,9 @@ public class GridInteractionController : MonoBehaviour
         if(!ServiceProvider.MoveManager.CanMakeMove) return;
 
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(!gridRenderer.TryGetTileFromPosition(clickPosition, out Tile tile) || !tile.TryGetColoredItem(out ColoredItem coloredItem) ) return;
+        if(!gridRenderer.TryGetTileFromPosition(clickPosition, out Tile tile) ||
+            !tile.TryGetColoredItem(out ColoredItem coloredItem) ) return;
+
         _currentSelectedTile = tile;
         link.Initialize(coloredItem);
     }
@@ -26,7 +28,11 @@ public class GridInteractionController : MonoBehaviour
         if(!ServiceProvider.MoveManager.CanMakeMove) return;
 
         Vector3 clickPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(!gridRenderer.TryGetTileFromPosition(clickPosition, out Tile tile) || tile == _currentSelectedTile || !tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+
+        if(!gridRenderer.TryGetTileFromPosition(clickPosition, out Tile tile) ||
+            tile == _currentSelectedTile ||
+            !tile.TryGetColoredItem(out ColoredItem coloredItem)) return;
+
         _currentSelectedTile = tile;
         link.TryAdd(coloredItem);
     }

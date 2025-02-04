@@ -5,6 +5,7 @@ public interface ILevelManager
     void DecideLevelStatus();
     void OnLevelFailed();
     void OnLevelSuccess();
+    void RestartLevel();
 }
 
 public class LevelManager : IProvidable , ILevelManager
@@ -26,19 +27,19 @@ public class LevelManager : IProvidable , ILevelManager
         }
     }
 
-    private void TryAgain()
+    public void RestartLevel()
     {
         SceneManager.LoadScene(0);
     }
 
     public void OnLevelFailed()
     {
-        ServiceProvider.UIManager.ShowFailScreen(TryAgain);
+        ServiceProvider.UIManager.ShowFailScreen(RestartLevel);
     }
 
     public void OnLevelSuccess()
     {
-        ServiceProvider.UIManager.ShowSuccessScreen(TryAgain);
+        ServiceProvider.UIManager.ShowSuccessScreen(RestartLevel);
     }
 
 }

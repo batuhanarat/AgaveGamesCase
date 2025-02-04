@@ -42,15 +42,15 @@ public static class ServiceProvider
             GameConfig = Resources.Load<GameConfig>("ScriptableObjects/GameConfigSO");
         }
         //Self registered.
-        _ = new Grid();
-        _ = new UIManager();
-        _ = new ScoreManager();
-        _ = new LevelManager();
-        _ = new MoveManager();
-        _ = new ItemFactory();
-        _ = new FallManager();
-        _ = new ShuffleManager();
-        _ = new MatchManager();
+            _ = new Grid();
+            _ = new UIManager();
+            _ = new ScoreManager();
+            _ = new LevelManager();
+            _ = new MoveManager();
+            _ = new ItemFactory();
+            _ = new FallManager();
+            _ = new ShuffleManager();
+            _ = new MatchManager();
             SceneManager.sceneLoaded += (_, _) =>
             {
                 ScoreManager.Reset();

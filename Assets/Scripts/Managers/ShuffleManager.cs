@@ -80,6 +80,15 @@ public class ShuffleManager : IProvidable, IShuffleManager
             }
         }
 
+        UnityEngine.Debug.Log("selectedColorForMatch: " +selectedColorForMatch);
+
+        if(maxCount < 3)
+        {
+            UnityEngine.Debug.Log("Cannot construct valid match group because item colors are not enough.  Restarting Level");
+            ServiceProvider.LevelManager.RestartLevel();
+            return;
+        }
+
         tilesToShuffle = tilesToShuffle.OrderBy(x => Random.value).ToList();
 
         var matchTiles = new List<Tile>();
@@ -193,6 +202,12 @@ public class ShuffleManager : IProvidable, IShuffleManager
 
             ServiceProvider.AnimationManager.StartShuffleItems(itemsToAnimate);
 
+        }
+        else
+        {
+            UnityEngine.Debug.Log("Cannot construct valid match group due to the force match algorithm. Restarting Level");
+            ServiceProvider.LevelManager.RestartLevel();
+            return;
         }
 
 
