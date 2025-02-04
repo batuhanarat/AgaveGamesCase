@@ -13,6 +13,7 @@ public struct MovableItems
 public interface IShuffleManager
 {
     bool TryShuffle();
+    void Shuffle();
     void Reset();
 }
 

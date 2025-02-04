@@ -7,6 +7,7 @@ public interface IGameManager
 
 public class GameManager : MonoBehaviour, IGameManager
 {
+    public GameConfig GameConfig;
     public void Start()
     {
         StartGame();
@@ -14,11 +15,11 @@ public class GameManager : MonoBehaviour, IGameManager
 
     public void StartGame()
     {
-        var gameConfig = ServiceProvider.GameConfig;
-        int rows = gameConfig.GridRow;
-        int columns = gameConfig.GridColumn;
+        GameConfig = ServiceProvider.GameConfig;
+        int rows = GameConfig.GridRow;
+        int columns = GameConfig.GridColumn;
 
-        ServiceProvider.ItemFactory.Initialize(gameConfig);
+        ServiceProvider.ItemFactory.Initialize(GameConfig);
         ServiceProvider.GameGrid.BuildGrid(rows,columns);
 
         for (int i = 0; i < rows; i++) {
