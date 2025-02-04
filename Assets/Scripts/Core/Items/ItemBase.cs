@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class ItemBase : MonoBehaviour
 {
     [SerializeField] protected SpriteRenderer spriteRenderer;
+    protected Vector3 scaleAfterPlacedInTile;
     public Vector2Int Index;
 
     public void PlaceInTile(Tile tile, Vector2Int coord)
@@ -11,6 +12,7 @@ public abstract class ItemBase : MonoBehaviour
         transform.position = tile.transform.position;
         transform.localScale = Vector3.one;
         transform.localScale = tile.transform.localScale;
+        scaleAfterPlacedInTile = transform.localScale;
     }
 
     public virtual void TryExplode()

@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ParticleSystem: {fileID: 7912230688046360882}
-  spriteRenderer: {fileID: 3807978577028571362}
+  SpriteRenderer: {fileID: 3807978577028571362}
   Index: {x: 0, y: 0}
 --- !u!198 &7912230688046360882
 ParticleSystem:

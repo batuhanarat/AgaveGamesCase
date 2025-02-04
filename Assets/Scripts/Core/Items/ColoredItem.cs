@@ -4,7 +4,11 @@ using UnityEngine;
 public class ColoredItem : ItemBase
 {
     public ItemColor Color { get; private set; }
-    private float _scale;
+    private Vector3 _originalScale;
+    private bool _isHighlighted = false;
+    private Tween _currentScaleTween;
+    private const float HIGHLIGHTED_SCALE_MULTIPLIER = 1.2f;
+    private float _highlightDuration = 0.1f;
 
     public void Configure(ItemColor color, Sprite sprite)
     {
@@ -19,17 +23,32 @@ public class ColoredItem : ItemBase
         ServiceProvider.ItemFactory.RecycleItem(this);
     }
 
-    public void HighlightForLink()
+    public void HighlightAsLinked()
     {
+        if (_isHighlighted) return;
         ServiceProvider.GameGrid.GetTileFromIndex(Index).Highlight();
-        _scale = transform.lossyScale.x;
-        transform.DOScale(_scale * 1.08f, 0.2f).SetEase(Ease.InSine);
+        _isHighlighted = true;
     }
 
-    public void RemoveHighlightForLink()
+    public void RemoveHighlightAsLinked()
     {
+        if (!_isHighlighted) return;
         ServiceProvider.GameGrid.GetTileFromIndex(Index).Unhighlight();
-        transform.DOScale(_scale, 0.2f).SetEase(Ease.InSine);
+        _isHighlighted = false;
+    }
+
+    public void HighlightAsLastInLink()
+    {
+        _currentScaleTween?.Kill();
+        _currentScaleTween = transform.DOScale(scaleAfterPlacedInTile * HIGHLIGHTED_SCALE_MULTIPLIER, _highlightDuration)
+            .SetEase(Ease.OutBack);
+    }
+
+    public void RemoveHighlightAsLastInLink()
+    {
+        _currentScaleTween?.Kill();
+        _currentScaleTween = transform.DOScale(scaleAfterPlacedInTile, _highlightDuration)
+            .SetEase(Ease.InBack);
     }
 
 }

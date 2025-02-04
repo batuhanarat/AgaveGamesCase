@@ -3,7 +3,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour
 {
     [SerializeField] private ParticleSystem ParticleSystem;
-    [SerializeField] private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer SpriteRenderer;
 
     public Vector2Int Index;
     public bool HasItem { get => Item != null; }
@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 
     public void Start()
     {
-        _defaultColor = spriteRenderer.color;
+        _defaultColor = SpriteRenderer.color;
     }
 
     public void PlayParticleEffect(Sprite itemSprite)
@@ -29,7 +29,7 @@ public class Tile : MonoBehaviour
 
     public void SetSize(float width, float height)
     {
-        Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
+        Vector2 spriteSize = SpriteRenderer.sprite.bounds.size;
 
         float scaleX = width / spriteSize.x;
         float scaleY = height / spriteSize.y;
@@ -58,12 +58,12 @@ public class Tile : MonoBehaviour
 
     public void Highlight()
     {
-        spriteRenderer.color = Color.yellow;
+        SpriteRenderer.color = Color.yellow;
     }
 
     public void Unhighlight()
     {
-        spriteRenderer.color = _defaultColor;
+        SpriteRenderer.color = _defaultColor;
     }
 
     public bool TryGetColoredItem(out ColoredItem coloredItem)

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class Link
@@ -8,10 +9,10 @@ public class Link
 
         private readonly LinkedList<ColoredItem> _linkedItems = new();
         private readonly HashSet<ColoredItem> _linkedSet = new();
+        private const int VALID_LINK_COUNT = 3;
         private bool _isInitialized;
         private ItemColor _targetColor;
-        private const int VALID_LINK_COUNT = 3;
-        private float delayBetweenExplosions = 0.1f;
+        private float _delayBetweenExplosions = 0.04f;
 
     #endregion
 
@@ -20,7 +21,6 @@ public class Link
     public void Initialize(ColoredItem item)
     {
         if (_isInitialized) return;
-
         _targetColor = item.Color;
         AddToLink(item);
         _isInitialized = true;
@@ -45,6 +45,7 @@ public class Link
     public IEnumerator TryExplodeLinkCoroutine()
     {
         if (!_isInitialized ) yield break;
+        UnhighlightLastItem();
 
         var count = _linkedItems.Count;
         bool isValidLink = count >= VALID_LINK_COUNT;
@@ -54,10 +55,10 @@ public class Link
             while(_linkedItems.Count > 0)
             {
                 ColoredItem item = _linkedItems.First.Value;
-                item.RemoveHighlightForLink();
+                item.RemoveHighlightAsLinked();
                 item.TryExplode();
                 _linkedItems.RemoveFirst();
-                yield return new WaitForSeconds(delayBetweenExplosions);
+                yield return new WaitForSeconds(_delayBetweenExplosions);
             }
 
             ServiceProvider.ScoreManager.IncrementScore(count);
@@ -69,15 +70,15 @@ public class Link
             while (_linkedItems.Count > 0)
             {
                 ColoredItem item = _linkedItems.First.Value;
-                item.RemoveHighlightForLink();
+                item.RemoveHighlightAsLinked();
                 _linkedItems.RemoveFirst();
             }
         }
-
     }
 
     public void Reset()
     {
+        UnhighlightLastItem();
         _linkedItems.Clear();
         _linkedSet.Clear();
         _isInitialized = false;
@@ -85,17 +86,35 @@ public class Link
 
     private void AddToLink(ColoredItem item)
     {
+        UnhighlightLastItem();
         _linkedItems.AddLast(item);
         _linkedSet.Add(item);
-        item.HighlightForLink();
+        item.HighlightAsLinked();
+        HighlightLastItem();
+    }
+
+    private void UnhighlightLastItem()
+    {
+        if(_linkedItems.Last != null)
+        {
+            var item =  _linkedItems.Last.Value;
+            item.RemoveHighlightAsLastInLink();
+        }
+    }
+    private void HighlightLastItem()
+    {
+        var item = _linkedItems.Last.Value;
+        item.HighlightAsLastInLink();
     }
 
     private void RemoveFromLink()
     {
         var removedItem = _linkedItems.Last.Value;
-        removedItem.RemoveHighlightForLink();
+        UnhighlightLastItem();
+        removedItem.RemoveHighlightAsLinked();
         _linkedSet.Remove(removedItem);
         _linkedItems.RemoveLast();
+        HighlightLastItem();
     }
 
     private bool CheckItemsAreAdjacent(ColoredItem item)
