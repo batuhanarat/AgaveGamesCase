@@ -27,7 +27,6 @@ public class MoveManager : IProvidable , IMoveManager
 
     public void MakeMove()
     {
-        if(!CanMakeMove) return;
         MoveCount--;
         _onMoveCountChanged(MoveCount);
         if(MoveCount == 0)
