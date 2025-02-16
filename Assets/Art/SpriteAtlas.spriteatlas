@@ -23,11 +23,11 @@ SpriteAtlas:
     platformSettings: []
     packingSettings:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
-      enableTightPacking: 1
+      enableTightPacking: 0
       enableAlphaDilation: 0
     secondaryTextureSettings: {}
     variantMultiplier: 1
@@ -38,19 +38,115 @@ SpriteAtlas:
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
-  - {fileID: 241912360, guid: 7e52a3552aadf4bf38ad3ee8f9f5f85a, type: 3}
+  - {fileID: 21300000, guid: 5c288700deb6e44fc99deafdac15bed6, type: 3}
+  - {fileID: 21300000, guid: b9c3df709cdaf4e1f93e80ea5201d9c7, type: 3}
+  - {fileID: 21300000, guid: 747143615396c4e81be43a01f5bfa0e0, type: 3}
+  - {fileID: 21300000, guid: 725b0d71a37f3454f9e62c68b39c0036, type: 3}
+  - {fileID: 21300000, guid: 37b131e11dd9c421dae01654cf1b2573, type: 3}
+  - {fileID: 21300000, guid: 741bcc028856e463eb7e2bf210880f7f, type: 3}
+  - {fileID: 21300000, guid: 5926ecd2aacfa41b8aebfa36b095df81, type: 3}
+  - {fileID: 21300000, guid: ab5ba4e2dd6ef4b1ebc2bfaff17631e7, type: 3}
+  - {fileID: 21300000, guid: a4b3f7039335d416e9f0f7309aa93ac7, type: 3}
+  - {fileID: 21300000, guid: 49ce9a232e4fe4f38a6cd83bad8d7072, type: 3}
+  - {fileID: 21300000, guid: 44811c534dd5c4c96935f7375ce24944, type: 3}
+  - {fileID: 21300000, guid: 72dd5773ed379440d8e79c529087290d, type: 3}
+  - {fileID: 21300000, guid: f2f4580479a744a0688440b82c21ddd5, type: 3}
+  - {fileID: 21300000, guid: 595efc24dd85c41689f6e34d27e57364, type: 3}
+  - {fileID: 21300000, guid: 29d6cd344768d4b4bb76ef72287ce6a5, type: 3}
+  - {fileID: 21300000, guid: 9bdaa754ec7ff4eeca5749a4cb7de864, type: 3}
+  - {fileID: 21300000, guid: 1ca4e2750396b42aa865f658c1442b45, type: 3}
+  - {fileID: 21300000, guid: 95905f85e8f284af897d8b29d563a9f2, type: 3}
   - {fileID: 21300000, guid: 424726d5cb6b64d4b8a7e309eca0a07b, type: 3}
+  - {fileID: 21300000, guid: 15d401e52e81d4adcac73afb6235075a, type: 3}
+  - {fileID: 21300000, guid: c80ad0f5bc8d143378e1c7bd05fe5fe1, type: 3}
+  - {fileID: 21300000, guid: f5997d4636ee94b33bcf0aaf09adbd23, type: 3}
+  - {fileID: 21300000, guid: 3709f06624b8746cbb1988814a082799, type: 3}
+  - {fileID: 21300000, guid: 2b5437866acef4318859e16d277075d3, type: 3}
+  - {fileID: 21300000, guid: b4b024c6ca6464483b99578de7edfd49, type: 3}
+  - {fileID: 21300000, guid: 02750cd6779474616bd4526ebb82c066, type: 3}
+  - {fileID: 21300000, guid: 4f2c2c1789d214dbbb8e84709f9abcb1, type: 3}
+  - {fileID: 21300000, guid: 345693673c3754cc982f7d78222adb83, type: 3}
+  - {fileID: 21300000, guid: f9ccbce713a2648bbabb8cff9b794d9b, type: 3}
+  - {fileID: 21300000, guid: 76888d18ebe074483ad1451633a3a082, type: 3}
+  - {fileID: 21300000, guid: 955c75387416b4a4ab8d12c6d992b4c5, type: 3}
   - {fileID: 21300000, guid: 1fe0c8984c36e48f8a5d1300b76f44d7, type: 3}
-  - {fileID: 1175567926, guid: 38e7e15a31bff43ef812aaa0f9b340f8, type: 3}
-  - {fileID: -1680411395, guid: d63d4b6d964f247f99a6cd9a22db4150, type: 3}
-  - {fileID: 1611137715, guid: eb9253ed8ff9548cf945d6ccd9a4aa9e, type: 3}
+  - {fileID: 21300000, guid: b4063cb848d46475cbdb11f4df696891, type: 3}
+  - {fileID: 21300000, guid: 0aacd9c8c17794003a7bc51f6cddbbed, type: 3}
+  - {fileID: 21300000, guid: 15be7be8cb7794948a109f075ac2d6db, type: 3}
+  - {fileID: 21300000, guid: c02a9619f06d64dffa3f5f2edb051493, type: 3}
+  - {fileID: 21300000, guid: 0462bec96f86043af9d39f4e762ee097, type: 3}
+  - {fileID: 21300000, guid: 3e156ed92f50e4998b09b3e14df851cc, type: 3}
+  - {fileID: 21300000, guid: e70e4c0ae61184b648a1d3a34d9c2a26, type: 3}
+  - {fileID: 21300000, guid: c27a3e1a5567840af93382a5278b05f9, type: 3}
+  - {fileID: 21300000, guid: 4b83027ab6f3146669980bb38aac9e45, type: 3}
+  - {fileID: 21300000, guid: eb0f14ba6b7a442478f3c867055d112b, type: 3}
+  - {fileID: 21300000, guid: 3fd4344b3afa147ee88da3654da8be4b, type: 3}
+  - {fileID: 21300000, guid: c102567ba82a14131903e66d5f8b39d3, type: 3}
+  - {fileID: 21300000, guid: e468bc7b2106c48a89b154d46cdd3116, type: 3}
+  - {fileID: 21300000, guid: 0cf1c10cfff5c40deb52b730c33de32e, type: 3}
+  - {fileID: 21300000, guid: 16b4fc3c337f7479594d3803b90e548b, type: 3}
+  - {fileID: 21300000, guid: ff8d069c429d44749afacf3664c64f60, type: 3}
+  - {fileID: 21300000, guid: aa52498d232524c35b3bf579825cd7d9, type: 3}
+  - {fileID: 21300000, guid: af2acedd0f75048e699a02eddfcb3d0f, type: 3}
+  - {fileID: 21300000, guid: b6a27ffd91d594782bfbd5589e864c28, type: 3}
+  - {fileID: 21300000, guid: 8fa0049f1c79647c39da49ece90b2c5f, type: 3}
+  - {fileID: 21300000, guid: bb40f8af572004e14a9f514f828af95e, type: 3}
+  - {fileID: 21300000, guid: cd6e33ef05ee44c2e8dc45d3ef9dfcb4, type: 3}
   m_PackedSpriteNamesToIndex:
-  - dropG_0
+  - Balloon - Green
+  - Blue
+  - Red
+  - Balloon - Purple
+  - Light
+  - Gem - Yellow
+  - Teal
+  - Gem - Pink
+  - Gem - Purple
+  - Gem - Blue
+  - Violet
+  - Gray - Blue
+  - Green
+  - Transparent
+  - Balloon - Heart
+  - Blue (Teal)
+  - Gem Triangle - Pink
+  - Dark
   - tile
+  - Orange
+  - Pink
+  - Gray
+  - Teal
+  - Green
+  - Gray
+  - Blue
+  - Purple
+  - Gem - Green
+  - Square - Cartoon
+  - Balloon - Yellow
+  - Shape
   - grid_background
-  - dropB_0
-  - dropR_0
-  - dropY_0
+  - Balloons
+  - Transparent
+  - Rounded Rectangle - 256px
+  - Violet
+  - Gem Triangle - Blue
+  - Neutral
+  - Gem Triangle - Purple
+  - Balloon - Blue
+  - Balloon - Pink
+  - Balloon - Pink - Bunny
+  - Bordeaux
+  - Gem Triangle - Green
+  - Balloon - Red
+  - Red
+  - Yellow
+  - Yellow
+  - Gem Triangle - Yellow
+  - Brown
+  - Pink
+  - Blue (Teal)
+  - Orange
+  - Purple
   m_RenderDataMap: {}
   m_Tag: SpriteAtlas
   m_IsVariant: 0

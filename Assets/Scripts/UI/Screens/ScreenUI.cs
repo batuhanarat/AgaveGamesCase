@@ -7,7 +7,9 @@ public class ScreenUI : MonoBehaviour, IUIScreen
     [SerializeField] private Button ContinueButton;
     private void Awake()
     {
-        ContinueButton.onClick.AddListener(() => { OnContinueClicked?.Invoke(); });
+        ContinueButton.onClick.AddListener(() => {
+        OnContinueClicked?.Invoke();
+        });
     }
 
     public event Action OnContinueClicked;
